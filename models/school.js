@@ -1,9 +1,10 @@
 //Require Mongoose
 var mongoose = require('mongoose');
-//Define a schema
-var Schema = mongoose.Schema;
 //grab teacher Schema
 let Teacher = require('./teacher.js');
+//Define a schema
+var Schema = mongoose.Schema;
+
 
 var schoolSchema = new Schema({
     name: { type: String, required: true },
@@ -11,6 +12,6 @@ var schoolSchema = new Schema({
     teachers: Teacher.schema
 });
 
-var School = mongoose.model('Schools', schoolSchema);
+var School = mongoose.model('schools', schoolSchema);
 
 module.exports = School;

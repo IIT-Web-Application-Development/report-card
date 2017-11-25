@@ -6,11 +6,11 @@ var Schema = mongoose.Schema;
 
 var teacherSchema = new Schema({
     name: { type: String, required: true },
-    topics:  [{ "Communication with Students": String, "Lecture Ability": String, "Helpfulness": String, "Understandability": String }],
-    comments:  [{ body: String, date: Date, knowhow: String }]
+    comments:  [{ body: String, date: Date, knowhow: String }],
+    topics:  { CommunicationWithStudents : String, LectureAbility : String, Helpfulness : String, Understandability : String }
 });
 
-var Teacher = mongoose.model('Teachers', teacherSchema);
+var Teacher = mongoose.model('teachers', teacherSchema);
 
 
 module.exports = Teacher;
