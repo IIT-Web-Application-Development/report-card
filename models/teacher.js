@@ -10,7 +10,7 @@ var teacherSchema = new Schema({
     comments:  [{ body: String, date: Date, knowhow: String }]
 });
 
-var Teacher = mongoose.model('School', teacherSchema);
+var Teacher = mongoose.model('Teachers', teacherSchema);
 
 
 module.exports = Teacher;
