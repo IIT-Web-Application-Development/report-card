@@ -1,16 +1,19 @@
 //Require Mongoose
 var mongoose = require('mongoose');
-
 //Define a schema
 var Schema = mongoose.Schema;
 
-var teacherSchema = new Schema({
-    name: { type: String, required: true },
-    topics:  [{ "Communication with Students": String, "Lecture Ability": String, "Helpfulness": String, "Understandability": String }],
-    comments:  [{ body: String, date: Date, knowhow: String }]
+var TeacherSchema = new Schema({
+    name: String,
+    comments:  [{ body: String, date: Date, knowhow: String }],
+    topics:  {
+      CommunicationWithStudents : String,
+      LectureAbility : String,
+      Helpfulness : String,
+      ˇUnderstandability : String }
 });
 
-var Teacher = mongoose.model('Teachers', teacherSchema);
+var Teacher = mongoose.model('teacher', TeacherSchema);
 
 
 module.exports = Teacher;
