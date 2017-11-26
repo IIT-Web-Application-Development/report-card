@@ -6,12 +6,12 @@ let Teacher = require('./teacher.js');
 var Schema = mongoose.Schema;
 
 
-var schoolSchema = new Schema({
-    name: { type: String, required: true },
-    location: { type: String, required: true },
+var SchoolSchema = new Schema({
+    name: String,
+    location: String,
     teachers: Teacher.schema
 });
 
-var School = mongoose.model('schools', schoolSchema);
+var School = mongoose.model('school', SchoolSchema);
 
 module.exports = School;

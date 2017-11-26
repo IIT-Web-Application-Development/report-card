@@ -40,7 +40,7 @@ describe('Schools', () => {
             Understandability: "A" },
             comments:  [{ body: "great teacher!", date: Date.now(), knowhow: "took class in fall 2017" }] }
           });
-          newSchool.save();
+          expectedSchool.save();
           chai.request(app)
           .get('/schools')
           .end((err, res) => {
@@ -54,4 +54,31 @@ describe('Schools', () => {
           });
         });
       });
-    });
+      describe('/POST schools', () => {
+        it('it should create a school', (done) => {
+          var expectedSchool = new School({
+            name:    "Illinois Institute of Technology",
+            location:    "Chicago, IL",
+            teachers: {
+              name: "Jane Doe",
+              topics:  {
+                CommunicationWithStudents : "A",
+                LectureAbility : "A",
+                Helpfulness : "B",
+                Understandability: "A" },
+                comments:  [{ body: "great teacher!", date: Date.now(), knowhow: "took class in fall 2017" }] }
+              });
+              chai.request(app)
+              .post('/schools')
+              .send(expectedSchool)
+              .end((err, res) => {
+                res.should.have.status(200);
+                res.body.message.should.eql("School successfully added!");
+                School.find({name : expectedSchool.name}).exec((err, schools) => {
+                  schools.length.should.be.eql(1);
+                  done();
+                });
+              });
+            })
+          });
+        });
