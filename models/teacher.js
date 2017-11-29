@@ -2,15 +2,12 @@
 var mongoose = require('mongoose');
 //Define a schema
 var Schema = mongoose.Schema;
+//grabs the comment schema
+let Comment = require('./comment.js');
 
 var TeacherSchema = new Schema({
     name: String,
-    comments:  [{ body: String, date: Date, knowhow: String }],
-    topics:  {
-      CommunicationWithStudents : String,
-      LectureAbility : String,
-      Helpfulness : String,
-      ˇUnderstandability : String }
+    comments: [Comment.schema]    
 });
 
 var Teacher = mongoose.model('teacher', TeacherSchema);
