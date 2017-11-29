@@ -6,7 +6,7 @@ let School = require('../models/school');
 // router.get('/', function(req, res, next) {
 //   res.send('respond with a resource');
 // });
-
+//routes for /schools
 router.route('/')
 .get(function(req, res) {
 	let schools = School.find({});
@@ -16,13 +16,45 @@ router.route('/')
 	});
 })
 .post(function(req, res) {
+
 	var newSchool = new School(req.body);
+
 	newSchool.save((err, school) => {
 		if(err) res.status(400).send(err)
 		res.json({message: "School successfully added!", school})
+
 	});
 });
 
+router.route('/:name')
+	.get(function(req, res) {
+	  let school = School.findOne({name: req.params.name});
+		//console.log(school);
+		school.exec((err, school) => {
+	  	if(err) res.status(404).send(err)
+	  	res.json(school)
+	});
+});
+
+//routes for teachers
+router.route('/:sname/teacher/:tname')
+.post(function(req, res) {
+	var newTeacher = new Teacher(req.body);
+	newTeacher.save((err, teacher) => {
+		if(err) res.status(400).send(err)
+		res.json({message: "Teacher successfully added!", teacher})
+	});
+})
+
+.get(function(req, res) {
+	let teacher = Teacher.findOne({tname: req.params.name});
+	schools.exec((err, game) => {
+		if(err) res.status(404).send(err)
+		res.json(game)
+	});
+});
+
+//routes for comments
 router.route('/:name/teachers/:tname/comments')
 .get(function(req, res) {
 	let comments = Comment.find({});
