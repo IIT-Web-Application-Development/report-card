@@ -35,13 +35,8 @@ describe('Schools', () => {
         [  {name: "Jane Doe",
         comments: [{
           body: "Fun class",
-          topics:  {
-            CommunicationWithStudents : "A",
-            LectureAbility : "B",
-            Helpfulness : "B",
-            Understandability : "B" },
-            date: Date.now(),
-            knowhow: "Took class"
+          date: Date.now(),
+          knowhow: "Took class"
           }]
         }]
       });
@@ -68,13 +63,8 @@ describe('Schools', () => {
         [{name: "Jane Doe",
         comments: [{
           body: "Fun class",
-          topics:  {
-            CommunicationWithStudents : "A",
-            LectureAbility : "B",
-            Helpfulness : "B",
-            Understandability : "B" },
-            date: Date.now(),
-            knowhow: "Took class"
+          date: Date.now(),
+          knowhow: "Took class"
           }]
         }]
       });
@@ -101,13 +91,8 @@ describe('Schools', () => {
           name: "Jane Doe",
           comments: [{
             body: "Fun class",
-            topics:  {
-              CommunicationWithStudents : "A",
-              LectureAbility : "B",
-              Helpfulness : "B",
-              Understandability : "B" },
-              date: Date.now(),
-              knowhow: "Took class"
+            date: Date.now(),
+            knowhow: "Took class"
             }]
           }]
         });
