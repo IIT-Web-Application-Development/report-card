@@ -37,7 +37,15 @@ router.route('/:name')
 });
 
 //routes for teachers
-router.route('/:sname/teacher/:tname')
+router.route('/:sname/teachers')
+.get(function(req, res) {
+	let teachers = School.find({name: req.params.sname}).select('teachers');
+	teachers.exec((err, teachers) => {
+		if(err) res.send(err);
+		res.json(teachers);
+	});
+})
+
 .post(function(req, res) {
 	var newTeacher = new Teacher(req.body);
 	newTeacher.save((err, teacher) => {
@@ -46,11 +54,12 @@ router.route('/:sname/teacher/:tname')
 	});
 })
 
+router.route('/:sname/teachers/:tname')
 .get(function(req, res) {
-	let teacher = Teacher.findOne({tname: req.params.name});
-	schools.exec((err, game) => {
+	let teacher = School.findOne({'teachers[0].name': req.params.name});
+	teacher.exec((err, teacher) => {
 		if(err) res.status(404).send(err)
-		res.json(game)
+		res.json(teacher)
 	});
 });
 
@@ -94,7 +103,7 @@ router.route('/:name/teachers/:tname/comments')
 			case "f":
 				avgGrade = avgGrade +0;
 				break;
-			default: 
+			default:
 				break;
 		}
 		switch(res.body.LectureAbility){
@@ -128,7 +137,7 @@ router.route('/:name/teachers/:tname/comments')
 			case "f":
 				avgGrade = avgGrade +0;
 				break;
-			default: 
+			default:
 				break;
 		}
 		switch(res.body.Helpfulness){
@@ -162,7 +171,7 @@ router.route('/:name/teachers/:tname/comments')
 			case "f":
 				avgGrade = avgGrade +0;
 				break;
-			default: 
+			default:
 				break;
 		}
 		switch(res.body.Understandability){
@@ -196,14 +205,14 @@ router.route('/:name/teachers/:tname/comments')
 			case "f":
 				avgGrade = avgGrade +0;
 				break;
-			default: 
+			default:
 				break;
 		}
 
 		avgGrade = (avgGrade/4)
 		if(avgGrade >= 3.5 && avgGrade <= 4.0){
 			avgLetter = "A";
-		} 
+		}
 		else if(avgGrade < 3.5 && avgGrade >= 3.0){
 			avgLetter = "B";
 		}
@@ -216,7 +225,7 @@ router.route('/:name/teachers/:tname/comments')
 		else {
 			avgLetter = "F";
 		}
-			do not know how to display average letter grade after in post 
+			do not know how to display average letter grade after in post
 
 		*/
 
