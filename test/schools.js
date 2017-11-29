@@ -164,4 +164,36 @@ describe('Schools', () => {
     });
   });
 });
+
+//Test for all comments
+describe('/GET /:name/teachers/:tname/comments', () => {
+       it('it should get all comments', (done) => {
+         var expectedSchool = new School({
+           name:   "Illinois Institute of Technology",
+           location:    "Chicago, IL",
+           teachers: [{
+             name: "Jane Doe",
+             comments: [{
+               body: "Fun class",
+               date: Date.now(),
+               knowhow: "Took class"
+               }]
+             }]
+             });
+           expectedSchool.save();
+           console.log(expectedSchool.name);
+           console.log(expectedSchool.teachers[0].name);
+            console.log(expectedSchool.teachers[0].comments[0].body);
+           chai.request(app)
+               .get('/schools/' + expectedSchool.name + '/teachers/' + expectedSchool.teachers[0].name + '/comments')
+               .end((err, res) => {
+                   //res.should.have.status(200);
+                   console.log(res.body.teachers[0].name);
+                   res.body.teachers[0].name.should.be.eql(expectedSchool.teachers[0].name);
+                    res.body.teachers[0].comments[0].body.should.be.eql(expectedSchool.teachers[0].comments[0].body);
+                   done();
+               });
+       });
+   });
+
 });
