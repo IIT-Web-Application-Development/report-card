@@ -5,11 +5,6 @@ var Schema = mongoose.Schema;
 
 var CommentSchema = new Schema({
     body: String,
-    topics:  {
-      CommunicationWithStudents : String,
-      LectureAbility : String,
-      Helpfulness : String,
-      Understandability : String },
     date: Date,
     knowhow: String
 });
