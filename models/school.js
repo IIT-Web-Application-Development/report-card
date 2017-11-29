@@ -9,8 +9,7 @@ var Schema = mongoose.Schema;
 var SchoolSchema = new Schema({
     name: String,
     location: String,
-    teachers: Teacher.schema,
-    nickname: [ String ]
+    teachers: [Teacher.schema]
 });
 
 var School = mongoose.model('school', SchoolSchema);
