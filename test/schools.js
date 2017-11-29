@@ -129,23 +129,28 @@ describe('Schools', () => {
         var expectedSchool = new School({
           name:    "Illinois Institute of Technology",
           location:    "Chicago, IL",
-          teachers:
-          [{name: "John Smith",
-          comments: [{
-            body: "Fun class",
-            date: Date.now(),
-            knowhow: "Took class"
-          }]
+          teachers: [{
+            name: "Jane Doe",
+            comments: [{
+              body: "Fun class",
+              topics:  {
+                CommunicationWithStudents : "A",
+                LectureAbility : "B",
+                Helpfulness : "B",
+                Understandability : "B" },
+                date: Date.now(),
+                knowhow: "Took class"
+              }]
         }]
       });
       chai.request(app)
-      .post('/schools/:sname/teacher')
+      .post('/schools/:sname/teachers')
       .send(expectedSchool)
       .end((err, res) => {
         res.should.have.status(200);
         res.body.message.should.eql("Teacher successfully added!");
-        School.find({name : expectedSchool.name}).exec((err, schools) => {
-          schools.length.should.be.eql(1);
+        School.find({name : expectedSchool.name.teachers.name}).exec((err, schools) => {
+          schools.name.teachers.length.should.be.eql(1);
           done();
         });
       });
@@ -158,7 +163,7 @@ describe('Schools', () => {
         name:    "Illinois Institute of Technology",
         location:    "Chicago, IL",
         teachers:
-        [{name: "John Smith",
+        [{name: "Jane Doe",
         comments: [{
           body: "Fun class",
           date: Date.now(),
@@ -168,13 +173,12 @@ describe('Schools', () => {
     });
     expectedSchool.save();
     chai.request(app)
-    .get('/schools/' + expectedSchool.name + '/teacher/' + expectedSchool.teachers.name)
+    .get('/schools/' + expectedSchool.name + '/teachers/' + expectedSchool.name.teachers.name)
     .end((err, res) => {
       res.should.have.status(200);
       res.body.should.be.a('array');
-      res.body.location.should.be.eql(expectedSchool.location);
-      res.body.teachers.name.should.be.eql(expectedSchool.teachers.name);
-      res.body.comments.should.be.eql(expectedSchool.comments);
+      res.body.teachers.name.should.be.eql(expectedSchool.name.teachers.name);
+      res.body.comments.should.be.eql(expectedSchool.name.teachers.name.comments);
       done();
     });
   });
