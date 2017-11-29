@@ -12,10 +12,10 @@ var CommentSchema = new Schema({
       Helpfulness : String,
       Understandability : String },
     date: Date,
-    knowhowL String
+    knowhow: String
 });
 
-var comment = mongoose.model('comment', CmmentSchema);
+var comment = mongoose.model('comment', CommentSchema);
 
 
-module.exports = comment;
+module.exports = comment;	
