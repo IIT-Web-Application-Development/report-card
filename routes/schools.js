@@ -25,9 +25,169 @@ router.route('/')
 
 router.route('/:name/teachers/:tname/comments')
 .get(function(req, res) {
-	let comments = Comment.find({});
+	//var avgGrade;
+	//var avgLetter;
+	let comment = Comment.find({});
 	comment.exec((err, comment) => {
 		if(err) res.send(err);
+
+		/*(res.body.CommunicationWithStudents){
+			case "A":
+				avgGrade = avgGrade +4;
+				break;
+			case "a":
+				avgGrade = avgGrade +4;
+				break;
+			case "B":
+				avgGrade = avgGrade +3;
+				break;
+			case "b":
+				avgGrade = avgGrade +3;
+				break;
+			case "C":
+				avgGrade = avgGrade +2;
+				break;
+			case "c":
+				avgGrade = avgGrade +2;
+				break;
+			case "D":
+				avgGrade = avgGrade +1;
+				break;
+			case "d":
+				avgGrade = avgGrade +1;
+				break;
+			case "F":
+				avgGrade = avgGrade +0;
+				break;
+			case "f":
+				avgGrade = avgGrade +0;
+				break;
+			default: 
+				break;
+		}
+		switch(res.body.LectureAbility){
+			case "A":
+				avgGrade = avgGrade +4;
+				break;
+			case "a":
+				avgGrade = avgGrade +4;
+				break;
+			case "B":
+				avgGrade = avgGrade +3;
+				break;
+			case "b":
+				avgGrade = avgGrade +3;
+				break;
+			case "C":
+				avgGrade = avgGrade +2;
+				break;
+			case "c":
+				avgGrade = avgGrade +2;
+				break;
+			case "D":
+				avgGrade = avgGrade +1;
+				break;
+			case "d":
+				avgGrade = avgGrade +1;
+				break;
+			case "F":
+				avgGrade = avgGrade +0;
+				break;
+			case "f":
+				avgGrade = avgGrade +0;
+				break;
+			default: 
+				break;
+		}
+		switch(res.body.Helpfulness){
+			case "A":
+				avgGrade = avgGrade +4;
+				break;
+			case "a":
+				avgGrade = avgGrade +4;
+				break;
+			case "B":
+				avgGrade = avgGrade +3;
+				break;
+			case "b":
+				avgGrade = avgGrade +3;
+				break;
+			case "C":
+				avgGrade = avgGrade +2;
+				break;
+			case "c":
+				avgGrade = avgGrade +2;
+				break;
+			case "D":
+				avgGrade = avgGrade +1;
+				break;
+			case "d":
+				avgGrade = avgGrade +1;
+				break;
+			case "F":
+				avgGrade = avgGrade +0;
+				break;
+			case "f":
+				avgGrade = avgGrade +0;
+				break;
+			default: 
+				break;
+		}
+		switch(res.body.Understandability){
+			case "A":
+				avgGrade = avgGrade +4;
+				break;
+			case "a":
+				avgGrade = avgGrade +4;
+				break;
+			case "B":
+				avgGrade = avgGrade +3;
+				break;
+			case "b":
+				avgGrade = avgGrade +3;
+				break;
+			case "C":
+				avgGrade = avgGrade +2;
+				break;
+			case "c":
+				avgGrade = avgGrade +2;
+				break;
+			case "D":
+				avgGrade = avgGrade +1;
+				break;
+			case "d":
+				avgGrade = avgGrade +1;
+				break;
+			case "F":
+				avgGrade = avgGrade +0;
+				break;
+			case "f":
+				avgGrade = avgGrade +0;
+				break;
+			default: 
+				break;
+		}
+
+		avgGrade = (avgGrade/4)
+		if(avgGrade >= 3.5 && avgGrade <= 4.0){
+			avgLetter = "A";
+		} 
+		else if(avgGrade < 3.5 && avgGrade >= 3.0){
+			avgLetter = "B";
+		}
+		else if(avgGrade < 3.0 && avgGrade >= 2.5){
+			avgLetter = "C";
+		}
+		else if(avgGrade < 2.5 && avgGrade >= 2.0){
+			avgLetter = "D";
+		}
+		else {
+			avgLetter = "F";
+		}
+			do not know how to display average letter grade after in post 
+
+		*/
+
 		res.json(comment);
 	});
 })
