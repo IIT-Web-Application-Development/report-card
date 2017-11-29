@@ -68,8 +68,10 @@ router.route('/:name/teachers/:tname/comments')
 .get(function(req, res) {
 	//var avgGrade;
 	//var avgLetter;
-	let comment = Comment.find({});
-	comment.exec((err, comment) => {
+	var schoolName = req.params.name;
+	var teacherName = req.params.tname;
+	let comments = School.find({}).where('name').equals(schoolName).where('teachers[0].name').equals(teacherName);
+	comments.exec((err, comments) => {
 		if(err) res.send(err);
 
 		/*(res.body.CommunicationWithStudents){
@@ -229,7 +231,7 @@ router.route('/:name/teachers/:tname/comments')
 
 		*/
 
-		res.json(comment);
+		res.json(comments);
 	});
 })
 .post(function(req, res) {
