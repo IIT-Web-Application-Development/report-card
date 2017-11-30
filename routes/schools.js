@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 let School = require('../models/school');
+let Teacher = require('../models/teacher');
+let Comments = require('../models/comment');
 
 // /* GET users listing. */
 // router.get('/', function(req, res, next) {
@@ -29,7 +31,7 @@ router.route('/')
 router.route('/:name')
 	.get(function(req, res) {
 	  let school = School.findOne({name: req.params.name});
-		//console.log(school);
+
 		school.exec((err, school) => {
 	  	if(err) res.status(404).send(err)
 	  	res.json(school)
@@ -37,11 +39,12 @@ router.route('/:name')
 });
 
 //routes for teachers
-router.route('/:sname/teachers')
+router.route('/:name/teachers')
 .get(function(req, res) {
-	let teachers = School.find({name: req.params.sname}).select('teachers');
+	let name = req.params.name;
+	let teachers = School.find({}, {'name.teachers': 1});
 	teachers.exec((err, teachers) => {
-		if(err) res.send(err);
+		if(err) res.status(404).send(err);
 		res.json(teachers);
 	});
 })
@@ -54,9 +57,10 @@ router.route('/:sname/teachers')
 	});
 })
 
-router.route('/:sname/teachers/:tname')
+router.route('/:name/teachers/:tname')
 .get(function(req, res) {
-	let teacher = School.findOne({'teachers[0].name': req.params.name});
+	var schoolName = req.params.name.teachers[0].name;
+	let teacher = School.findOne({ schoolName: req.params.tname});
 	teacher.exec((err, teacher) => {
 		if(err) res.status(404).send(err)
 		res.json(teacher)
@@ -68,9 +72,9 @@ router.route('/:name/teachers/:tname/comments')
 .get(function(req, res) {
 	//var avgGrade;
 	//var avgLetter;
-	var schoolName = req.params.name;
-	var teacherName = req.params.tname;
-	let comments = School.find({}).where('name').equals(schoolName).where('teachers[0].name').equals(teacherName);
+	var schoolName = req.params.name.teachers.name;
+	//var teacherName = req.params.tname;
+	let comments = School.findOne({ schoolName: req.params.tname}, {comments: 1});
 	comments.exec((err, comments) => {
 		if(err) res.send(err);
 
@@ -244,23 +248,15 @@ router.route('/:name/teachers/:tname/comments')
 
 router.route('/:name/teachers/:tname/comments/:id')
 	.get(function(req, res) {
-	  let comment = Comment.findOne({_id: req.params.id});
-	  Comment.exec((err, comment) => {
+	  let comment = Comments.findOne({_id: req.params.id});
+	  comment.exec((err, comment) => {
 	  	if(err) res.status(404).send(err)
 
 	  	res.json(comment)
 	  });
 	})
-	.put(function(req, res) {
-	  var comment = Coment.update({_id: req.params.id}, req.body);
-	  comment.exec((err, comment) => {
-	  	if(err) res.status(404).send(err)
-
-	  	res.json({message: "Comment successfully updated!", comment: req.body})
-	  });
-	})
 	.delete(function(req, res) {
-	  Comment.remove({_id: req.params.id}, function (err) {
+	  Comments.remove({_id: req.params.id}, function (err) {
 	  	if(err) res.status(404).send(err);
 
 	  	res.json({message: "Comment successfully deleted!"})
