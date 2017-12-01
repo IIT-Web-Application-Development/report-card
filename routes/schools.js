@@ -1,60 +1,67 @@
 var express = require('express');
 var router = express.Router();
-let School = require('../models/school');
-let Teacher = require('../models/teacher');
-let Comments = require('../models/comment');
 
-// /* GET users listing. */
-// router.get('/', function(req, res, next) {
-//   res.send('respond with a resource');
-// });
+
+//array to hold schools
+var schools = [ ];
+var scount = 0;
+var tcount = 0;
 //routes for /schools
 router.route('/')
 .get(function(req, res) {
-	let schools = School.find({});
-	schools.exec((err, schools) => {
-		if(err) res.send(err);
-		res.json(schools);
-	});
+ res.json(schools);
 })
 .post(function(req, res) {
-
-	var newSchool = new School(req.body);
-
-	newSchool.save((err, school) => {
-		if(err) res.status(400).send(err)
-		res.json({message: "School successfully added!", school})
-
-	});
+	var id = {"id" : scount};
+  var newSchool = req.body;
+  newSchool.id = id.id;
+  newSchool.teachers = [ ];
+  schools.push(newSchool);
+  res.status(200);
+  res.json({message: "School successfully added!", newSchool})
+	scount + 1;
 });
 
-router.route('/:name')
-	.get(function(req, res) {
-	  let school = School.findOne({name: req.params.name});
+var getSchool = function(schoolname) {
+	function findSchool(school) {
+    return school.name === schoolname;
+  }
+	return schools.find(findSchool);
+};
 
-		school.exec((err, school) => {
-	  	if(err) res.status(404).send(err)
-	  	res.json(school)
-	});
+var getTeacher = function(teachername) {
+	function findTeacher(teacher) {
+    return school.school.name === teachername;
+  }
+	return schools.find(findTeacher);
+};
+
+router.route('/:sname')
+	.get(function(req, res) {
+	var schoolname = req.params.sname;
+	res.status(200);
+	res.json(getSchool(schoolname));
 });
 
 //routes for teachers
-router.route('/:name/teachers')
+router.route('/:sname/teachers')
+
 .get(function(req, res) {
-	let name = req.params.name;
-	let teachers = School.find({}, {'name.teachers': 1});
-	teachers.exec((err, teachers) => {
-		if(err) res.status(404).send(err);
-		res.json(teachers);
-	});
+let schoolname = req.params.sname;
+	res.status(200);
+	res.json(getSchool(schoolname).teachers);
 })
 
 .post(function(req, res) {
-	var newTeacher = new Teacher(req.body);
-	newTeacher.save((err, teacher) => {
-		if(err) res.status(400).send(err)
-		res.json({message: "Teacher successfully added!", teacher})
-	});
+	let schoolname = req.params.sname;
+	var id = {"id" : tcount};
+  var newTeacher = req.body;
+  newTeacher.id = id.id;
+  newTeacher.comments = [ ];
+  getSchool(schoolname).teachers.push(newTeacher);
+  res.status(200);
+	res.json({message: "Teacher successfully added!", newTeacher})
+	tcount + 1;
 })
 
 router.route('/:name/teachers/:tname')
