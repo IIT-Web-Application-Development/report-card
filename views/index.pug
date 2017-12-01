@@ -1,5 +1,90 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  head
+    h1= title
+    p Welcome to #{title}
+
+  body
+    // A navigation tab bar to switch between school and teachers
+    .search-tabs-wrapper
+      ul.nav.nav-tabs(role="tablist")
+        li.active
+          a(href="#school" role="tab" data-toggle="tab") School
+        li
+          a(href="#teacher" role="tab" data-toggle="tab") Teacher
+
+      // tab content for School
+      .tab-content.search-tabs-content
+        .tab-pane.active(id="school")
+          div Search School name:
+            input(
+              type= 'text'
+              placeholder= 'Illinois Institute of Technology'
+              class= 'searchschool input'
+              )
+            button Search
+
+          div Add School name:
+            input(
+              type= 'text'
+              placeholder= 'Illinois Institute of Technology'
+              class= 'addschool input'
+              )
+            button Add
+
+        // tab content for Teacher
+        .tab-pane(id="teacher")
+          h3 Teacher Information
+          div Search Teacher name:
+            input(
+              type= 'text'
+              placeholder= 'John Smith'
+              class= 'searchteacher input'
+              )
+            button Search
+
+          div Add Teacher name:
+            input(
+              type= 'text'
+              placeholder= 'John Smith'
+              class= 'addteacher input'
+              )
+            button Add
+
+          h3 Teacher Comments
+          div View Teacher comments:
+            input(
+              type= 'text'
+              placeholder= 'John Smith'
+              class= 'viewcomments input'
+              )
+            button View
+
+          div Teacher name:
+            input(
+              type= 'text'
+              placeholder= 'John Smith'
+              class= 'addteachercomments input'
+              )
+            A Comment
+            input(
+              type= 'text'
+              placeholder= 'Teacher is helpful'
+              class= 'addcomments input'
+              )
+            A Knowledge of teacher
+            input(
+              type= 'text'
+              placeholder= 'Took class'
+              class= 'addknowcomments input'
+              )
+            button Add
+
+          div Comment Id:
+            input(
+              type= 'text'
+              placeholder= '2'
+              class= 'deletecomment input'
+              )
+            button Delete
