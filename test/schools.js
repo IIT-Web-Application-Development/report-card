@@ -108,7 +108,7 @@ describe('Schools', () => {
       });
     });
 
-    //test for post and get of a teacher in a school
+    //Test for post and get of a teacher in a school
     describe('/POST schools/:sname/teacher', () => {
       it('it should create a teacher', (done) => {
         var expectedSchool = new School({
@@ -165,7 +165,7 @@ describe('Schools', () => {
   });
 });
 
-//Test for all comments
+//Test for all comments 
 describe('/GET /:name/teachers/:tname/comments', () => {
        it('it should get all comments', (done) => {
          var expectedSchool = new School({
