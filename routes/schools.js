@@ -1,56 +1,76 @@
 var express = require('express');
 var router = express.Router();
-let School = require('../models/school');
 
-// /* GET users listing. */
-// router.get('/', function(req, res, next) {
-//   res.send('respond with a resource');
-// });
+
+//array to hold schools
+var schools = [ ];
+var scount = 0;
+var tcount = 0;
 //routes for /schools
 router.route('/')
 .get(function(req, res) {
-	let schools = School.find({});
-	schools.exec((err, schools) => {
-		if(err) res.send(err);
-		res.json(schools);
-	});
+ res.json(schools);
 })
 .post(function(req, res) {
-
-	var newSchool = new School(req.body);
-
-	newSchool.save((err, school) => {
-		if(err) res.status(400).send(err)
-		res.json({message: "School successfully added!", school})
-
-	});
+	var id = {"id" : scount};
+  var newSchool = req.body;
+  newSchool.id = id.id;
+  newSchool.teachers = [ ];
+  schools.push(newSchool);
+  res.status(200);
+  res.json({message: "School successfully added!", newSchool})
+	scount + 1;
 });
 
-router.route('/:name')
+var getSchool = function(schoolname) {
+	function findSchool(school) {
+    return school.name === schoolname;
+  }
+	return schools.find(findSchool);
+};
+
+var getTeacher = function(teachername) {
+	function findTeacher(teacher) {
+    return school.school.name === teachername;
+  }
+	return schools.find(findTeacher);
+};
+
+router.route('/:sname')
 	.get(function(req, res) {
-	  let school = School.findOne({name: req.params.name});
-		//console.log(school);
-		school.exec((err, school) => {
-	  	if(err) res.status(404).send(err)
-	  	res.json(school)
-	});
+	var schoolname = req.params.sname;
+	res.status(200);
+	res.json(getSchool(schoolname));
 });
 
 //routes for teachers
-router.route('/:sname/teacher/:tname')
-.post(function(req, res) {
-	var newTeacher = new Teacher(req.body);
-	newTeacher.save((err, teacher) => {
-		if(err) res.status(400).send(err)
-		res.json({message: "Teacher successfully added!", teacher})
-	});
-})
+router.route('/:sname/teachers')
 
 .get(function(req, res) {
-	let teacher = Teacher.findOne({tname: req.params.name});
-	schools.exec((err, game) => {
+let schoolname = req.params.sname;
+	res.status(200);
+	res.json(getSchool(schoolname).teachers);
+})
+
+.post(function(req, res) {
+	let schoolname = req.params.sname;
+	var id = {"id" : tcount};
+  var newTeacher = req.body;
+  newTeacher.id = id.id;
+  newTeacher.comments = [ ];
+  getSchool(schoolname).teachers.push(newTeacher);
+  res.status(200);
+	res.json({message: "Teacher successfully added!", newTeacher})
+	tcount + 1;
+})
+
+router.route('/:name/teachers/:tname')
+.get(function(req, res) {
+	var schoolName = req.params.name.teachers[0].name;
+	let teacher = School.findOne({ schoolName: req.params.tname});
+	teacher.exec((err, teacher) => {
 		if(err) res.status(404).send(err)
-		res.json(game)
+		res.json(teacher)
 	});
 });
 
@@ -59,9 +79,9 @@ router.route('/:name/teachers/:tname/comments')
 .get(function(req, res) {
 	//var avgGrade;
 	//var avgLetter;
-	var schoolName = req.params.name;
-	var teacherName = req.params.tname;
-	let comments = School.find({}).where('name').equals(schoolName).where('teachers[0].name').equals(teacherName);
+	var schoolName = req.params.name.teachers.name;
+	//var teacherName = req.params.tname;
+	let comments = School.findOne({ schoolName: req.params.tname}, {comments: 1});
 	comments.exec((err, comments) => {
 		if(err) res.send(err);
 
@@ -96,7 +116,7 @@ router.route('/:name/teachers/:tname/comments')
 			case "f":
 				avgGrade = avgGrade +0;
 				break;
-			default: 
+			default:
 				break;
 		}
 		switch(res.body.LectureAbility){
@@ -130,7 +150,7 @@ router.route('/:name/teachers/:tname/comments')
 			case "f":
 				avgGrade = avgGrade +0;
 				break;
-			default: 
+			default:
 				break;
 		}
 		switch(res.body.Helpfulness){
@@ -164,7 +184,7 @@ router.route('/:name/teachers/:tname/comments')
 			case "f":
 				avgGrade = avgGrade +0;
 				break;
-			default: 
+			default:
 				break;
 		}
 		switch(res.body.Understandability){
@@ -198,14 +218,14 @@ router.route('/:name/teachers/:tname/comments')
 			case "f":
 				avgGrade = avgGrade +0;
 				break;
-			default: 
+			default:
 				break;
 		}
 
 		avgGrade = (avgGrade/4)
 		if(avgGrade >= 3.5 && avgGrade <= 4.0){
 			avgLetter = "A";
-		} 
+		}
 		else if(avgGrade < 3.5 && avgGrade >= 3.0){
 			avgLetter = "B";
 		}
@@ -218,7 +238,7 @@ router.route('/:name/teachers/:tname/comments')
 		else {
 			avgLetter = "F";
 		}
-			do not know how to display average letter grade after in post 
+			do not know how to display average letter grade after in post
 
 		*/
 
@@ -235,23 +255,15 @@ router.route('/:name/teachers/:tname/comments')
 
 router.route('/:name/teachers/:tname/comments/:id')
 	.get(function(req, res) {
-	  let comment = Comment.findOne({_id: req.params.id});
-	  Comment.exec((err, comment) => {
+	  let comment = Comments.findOne({_id: req.params.id});
+	  comment.exec((err, comment) => {
 	  	if(err) res.status(404).send(err)
 
 	  	res.json(comment)
 	  });
 	})
-	.put(function(req, res) {
-	  var comment = Coment.update({_id: req.params.id}, req.body);
-	  comment.exec((err, comment) => {
-	  	if(err) res.status(404).send(err)
-
-	  	res.json({message: "Comment successfully updated!", comment: req.body})
-	  });
-	})
 	.delete(function(req, res) {
-	  Comment.remove({_id: req.params.id}, function (err) {
+	  Comments.remove({_id: req.params.id}, function (err) {
 	  	if(err) res.status(404).send(err);
 
 	  	res.json({message: "Comment successfully deleted!"})
