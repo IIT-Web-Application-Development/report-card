@@ -161,6 +161,117 @@ describe('Schools', () => {
 //   });
 // });
 //
+
+
+//***** I think /:tname needs the GET and POST so my pathing may work.*****
+
+
+//Gets all comments
+describe('/GET schools/:sname/teacher/:tname/comments', ()=> {
+  it('it should get all comments', (done) => {
+    var expectedSchool = {
+          'name':    "Illinois Institute of Technology",
+          'location':    "Chicago, IL"
+    }
+    var expectedTeacher = {
+          'name': "John Doe"
+    }
+    var expectedComments = {
+            body: "Fun class",
+           date: Date.now(),
+           knowhow: "Took class"
+    }
+    chai.request(app)
+    .get('/schools/' + expectedSchool.name + '/teachers/' + expectedSchool.expectedTeacher.name + '/comments')
+    .end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.be.a('array');
+      res.body.length.should.be.eql(0);
+      done();
+    });
+  });
+});
+//Post all comments
+describe('/POST schools/:sname/teacher/:tname/comments/', () =>{
+  it('it should post all comments', (done) =>{
+    var expectedSchool = {
+          'name':    "Illinois Institute of Technology",
+          'location':    "Chicago, IL"
+    }
+    var expectedTeacher = {
+          'name': "John Doe"
+    }
+    var expectedComments = {
+            body: "Fun class",
+           date: Date.now(),
+           knowhow: "Took class"
+    }
+    chai.request(app)
+    .post('/schools/'+ expectedSchool.name + '/teachers/' + expectedSchool.expectedTeacher.name + '/comments/')
+    .send(expectedComments)
+    .end((err, res) =>{
+      res.should.have.status(200);
+      res.body.message.should.eql("Comment successfully added!");
+      done();
+    });
+  });
+});
+
+//gets a specific comment
+describe('/GET schools/:sname/teacher/:tname/comments/:id', ()=> {
+  it('it should get a speciffic comment', (done) => {
+    var expectedSchool = {
+          'name':    "Illinois Institute of Technology",
+          'location':    "Chicago, IL"
+    }
+    var expectedTeacher = {
+          'name': "John Doe"
+    }
+    var expectedComment = {
+           body: "Fun class",
+           date: Date.now(),
+           knowhow: "Took class"
+    }
+    chai.request(app)
+    .get('/schools/'+ expectedSchool.name + '/teachers/' + expectedSchool.expectedTeacher.name + '/comments/' + expectedSchool.expectedTeacher.name.expectedComments.id) 
+    .end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.have.property('body');
+      res.body.should.have.property('date');
+      res.body.should.have.property('knowhow');
+      done();
+    });
+  });
+});
+
+//deletes the specific comment
+describe('/DELETE schools/:sname/teacher/:tname/comments/:id', () => {
+      it('it should post a speciffic comment', (done) => {
+      var expectedSchool =
+      {
+          'name':    "Illinois Institute of Technology",
+          'location':    "Chicago, IL"
+
+      }
+      var expectedTeacher = {
+          'name': "John Doe"
+      }
+      var expectedComment = {
+            body: "Fun class",
+           date: Date.now(),
+           knowhow: "Took class"
+    }
+      chai.request(app)
+      .delete('/schools/'+ expectedSchool.name + '/teachers/' + expectedSchool.expectedTeacher.name + '/comments/' + expectedSchool.expectedTeacher.name.expectedComment.id)
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.message.should.eql("Comment successfully deleted!");
+          done();
+      });
+    });
+  });
+
+
 // //Test for all comments
 // describe('/GET /:name/teachers/:tname/comments', () => {
 //        it('it should get all comments', (done) => {
