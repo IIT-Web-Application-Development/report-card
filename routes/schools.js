@@ -66,12 +66,15 @@ let schoolname = req.params.sname;
 
 router.route('/:name/teachers/:tname')
 .get(function(req, res) {
-	var schoolName = req.params.name.teachers[0].name;
-	let teacher = School.findOne({ schoolName: req.params.tname});
-	teacher.exec((err, teacher) => {
-		if(err) res.status(404).send(err)
-		res.json(teacher)
-	});
+	var schoolName = req.params.name;
+  var teacherName = req.params.tname;
+	// let teacher = School.findOne({ schoolName: req.params.tname});
+	// teacher.exec((err, teacher) => {
+	// 	if(err) res.status(404).send(err)
+	// 	res.json(teacher)
+	// });
+  res.status(200);
+  res.json(getTeacher(teacherName));
 });
 
 //routes for comments

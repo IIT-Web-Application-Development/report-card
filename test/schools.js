@@ -134,33 +134,33 @@ describe('Schools', () => {
     });
 
 
-//   describe('/GET schools/:sname/teacher/:tname', () => {
-//     it('it should return teacher based on teacher name', (done) => {
-//       var expectedSchool = new School({
-//         name:    "Illinois Institute of Technology",
-//         location:    "Chicago, IL",
-//         teachers:
-//         [{name: "Jane Doe",
-//         comments: [{
-//           body: "Fun class",
-//           date: Date.now(),
-//           knowhow: "Took class"
-//         }]
-//       }]
-//     });
-//     expectedSchool.save();
-//     chai.request(app)
-//     .get('/schools/' + expectedSchool.name + '/teachers/' + expectedSchool.teachers[0].name)
-//     .end((err, res) => {
-//       res.should.have.status(200);
-//       res.body.should.be.a('object');
-//       res.body.teachers[0].name.should.be.eql(expectedSchool.teachers[0].name);
-//     //  res.body.comments.should.be.eql(expectedSchool.teachers[0].name.comments[0]);
-//       done();
-//     });
-//   });
-// });
-//
+  describe('/GET schools/:sname/teacher/:tname', () => {
+    it('it should return teacher based on teacher name', (done) => {
+      var expectedSchool =
+      {
+        'name':    "Illinois Institute of Technology",
+        'location':    "Chicago, IL"
+
+      }
+      var expectedTeacher =
+      {
+        'name': "John Doe"
+      }
+    chai.request(app)
+    .get('/schools/' + expectedSchool.name + '/teacher/' + expectedTeacher.name)
+
+    .end((err, res) => {
+      res.should.have.status(200);
+      // res.body.should.be.a('object');
+      // res.body.should.have.property('name');
+      // res.body.length.should.be.eql(1);
+      res.body.should.have.property('name');
+    //  res.body.comments.should.be.eql(expectedSchool.teachers[0].name.comments[0]);
+      done();
+    });
+  });
+});
+
 // //Test for all comments
 // describe('/GET /:name/teachers/:tname/comments', () => {
 //        it('it should get all comments', (done) => {
