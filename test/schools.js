@@ -162,12 +162,53 @@ describe('Schools', () => {
 // });
 //
 
+/*
+  //tried to make test for :tname
+
+describe('/GET /schools/:sname/teachers/:tname', () => {
+  it('it should get teachers specific by name', (done) => {
+    var expectedSchool = {
+          'name':    "Illinois Institute of Technology",
+          'location':    "Chicago, IL"
+    }
+    var expectedTeacher = {
+          'name': "John Doe"
+    }    
+    chai.request(app)
+    .get('/schools/' + expectedSchool.name + '/teachers/' + expectedTeacher.name)
+    .end((err,res) => {
+          res.should.have.status(200);
+          res.body.should.have.property('name');
+          done();
+    });
+  });
+});
+
+describe('/POST /schools/:sname/teachers/:tname/', () =>{
+  it('it should post teacher specificby name', (done) =>{
+    var expectedSchool = {
+          'name':    "Illinois Institute of Technology",
+          'location':    "Chicago, IL"
+    }
+    var expectedTeacher = {
+          'name': "John Doe"
+    } 
+    chai.request(app)
+    .post('/schools/' + expectedSchool.name + '/teachers/' + expectedTeacher.name)
+    .send(expectedTeacher)
+    .end((err, res) =>{
+      res.should.have.status(200);
+      res.body.message.should.eql("Teacher successfully added!");
+      done();
+    })
+  })
+})*/
 
 //***** I think /:tname needs the GET and POST so my pathing may work.*****
 
 
 //Gets all comments
-describe('/GET schools/:sname/teacher/:tname/comments', ()=> {
+describe('/GET schools/:sname/teachers/:tname/comments', ()=> {
   it('it should get all comments', (done) => {
     var expectedSchool = {
           'name':    "Illinois Institute of Technology",
@@ -186,13 +227,13 @@ describe('/GET schools/:sname/teacher/:tname/comments', ()=> {
     .end((err, res) => {
       res.should.have.status(200);
       res.body.should.be.a('array');
-      res.body.length.should.be.eql(0);
+      res.body.length.should.be.eql(1);
       done();
     });
   });
 });
 //Post all comments
-describe('/POST schools/:sname/teacher/:tname/comments/', () =>{
+describe('/POST schools/:sname/teachers/:tname/comments/', () =>{
   it('it should post all comments', (done) =>{
     var expectedSchool = {
           'name':    "Illinois Institute of Technology",
@@ -218,7 +259,7 @@ describe('/POST schools/:sname/teacher/:tname/comments/', () =>{
 });
 
 //gets a specific comment
-describe('/GET schools/:sname/teacher/:tname/comments/:id', ()=> {
+describe('/GET schools/:sname/teachers/:tname/comments/:id', ()=> {
   it('it should get a speciffic comment', (done) => {
     var expectedSchool = {
           'name':    "Illinois Institute of Technology",
@@ -245,7 +286,7 @@ describe('/GET schools/:sname/teacher/:tname/comments/:id', ()=> {
 });
 
 //deletes the specific comment
-describe('/DELETE schools/:sname/teacher/:tname/comments/:id', () => {
+describe('/DELETE schools/:sname/teachers/:tname/comments/:id', () => {
       it('it should post a speciffic comment', (done) => {
       var expectedSchool =
       {
