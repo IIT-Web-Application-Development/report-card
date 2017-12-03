@@ -81,6 +81,7 @@ describe('Schools', () => {
         });
       });
     });
+
     describe('/POST schools/:sname/teacher', () => {
       it('it should create a teacher', (done) => {
         var expectedSchool =
@@ -111,7 +112,6 @@ describe('Schools', () => {
         {
           'name':    "Illinois Institute of Technology",
           'location':    "Chicago, IL"
-
       }
         var expectedTeacher =
         {
@@ -147,7 +147,7 @@ describe('Schools', () => {
         'name': "John Doe"
       }
     chai.request(app)
-    .get('/schools/' + expectedSchool.name + '/teacher/' + expectedTeacher.name)
+    .get('/schools/' + expectedSchool.name + '/teachers/' + expectedTeacher.name)
 
     .end((err, res) => {
       res.should.have.status(200);
@@ -160,76 +160,6 @@ describe('Schools', () => {
     });
   });
 });
-
-//   describe('/GET schools/:sname/teacher/:tname', () => {
-//     it('it should return teacher based on teacher name', (done) => {
-//       var expectedSchool = new School({
-//         name:    "Illinois Institute of Technology",
-//         location:    "Chicago, IL",
-//         teachers:
-//         [{name: "Jane Doe",
-//         comments: [{
-//           body: "Fun class",
-//           date: Date.now(),
-//           knowhow: "Took class"
-//         }]
-//       }]
-//     });
-//     expectedSchool.save();
-//     chai.request(app)
-//     .get('/schools/' + expectedSchool.name + '/teachers/' + expectedSchool.teachers[0].name)
-//     .end((err, res) => {
-//       res.should.have.status(200);
-//       res.body.should.be.a('object');
-//       res.body.teachers[0].name.should.be.eql(expectedSchool.teachers[0].name);
-//     //  res.body.comments.should.be.eql(expectedSchool.teachers[0].name.comments[0]);
-//       done();
-//     });
-//   });
-// });
-//
-
-/*
-  //tried to make test for :tname
-
-describe('/GET /schools/:sname/teachers/:tname', () => {
-  it('it should get teachers specific by name', (done) => {
-    var expectedSchool = {
-          'name':    "Illinois Institute of Technology",
-          'location':    "Chicago, IL"
-    }
-    var expectedTeacher = {
-          'name': "John Doe"
-    }    
-    chai.request(app)
-    .get('/schools/' + expectedSchool.name + '/teachers/' + expectedTeacher.name)
-    .end((err,res) => {
-          res.should.have.status(200);
-          res.body.should.have.property('name');
-          done();
-    });
-  });
-});
-
-describe('/POST /schools/:sname/teachers/:tname/', () =>{
-  it('it should post teacher specificby name', (done) =>{
-    var expectedSchool = {
-          'name':    "Illinois Institute of Technology",
-          'location':    "Chicago, IL"
-    }
-    var expectedTeacher = {
-          'name': "John Doe"
-    } 
-    chai.request(app)
-    .post('/schools/' + expectedSchool.name + '/teachers/' + expectedTeacher.name)
-    .send(expectedTeacher)
-    .end((err, res) =>{
-      res.should.have.status(200);
-      res.body.message.should.eql("Teacher successfully added!");
-      done();
-    }); 
-  });
-});*/
 
 //***** I think /:tname needs the GET and POST so my pathing may work.*****
 
@@ -244,12 +174,12 @@ describe('/GET schools/:sname/teachers/:tname/comments', ()=> {
           'name': "John Doe"
     }
     var expectedComments = {
-            body: "Fun class",
+          body: "Fun class",
            date: Date.now(),
            knowhow: "Took class"
     }
     chai.request(app)
-    .get('/schools/' + expectedSchool.name + '/teachers/' + expectedSchool.expectedTeacher.name + '/comments')
+    .get('/schools/' + expectedSchool.name + '/teachers/' + expectedTeacher.name + '/comments')
     .end((err, res) => {
       res.should.have.status(200);
       res.body.should.be.a('array');
@@ -274,7 +204,7 @@ describe('/POST schools/:sname/teachers/:tname/comments/', () =>{
            knowhow: "Took class"
     }
     chai.request(app)
-    .post('/schools/'+ expectedSchool.name + '/teachers/' + expectedSchool.expectedTeacher.name + '/comments/')
+    .post('/schools/'+ expectedSchool.name + '/teachers/' + expectedTeacher.name + '/comments/')
     .send(expectedComments)
     .end((err, res) =>{
       res.should.have.status(200);
@@ -294,13 +224,14 @@ describe('/GET schools/:sname/teachers/:tname/comments/:id', ()=> {
     var expectedTeacher = {
           'name': "John Doe"
     }
+    //needs an id will probably be 1
     var expectedComment = {
            body: "Fun class",
            date: Date.now(),
            knowhow: "Took class"
     }
     chai.request(app)
-    .get('/schools/'+ expectedSchool.name + '/teachers/' + expectedSchool.expectedTeacher.name + '/comments/' + expectedSchool.expectedTeacher.name.expectedComments.id) 
+    .get('/schools/'+ expectedSchool.name + '/teachers/' + expectedTeacher.name + '/comments/' + expectedComments.id)
     .end((err, res) => {
       res.should.have.status(200);
       res.body.should.have.property('body');
@@ -323,13 +254,14 @@ describe('/DELETE schools/:sname/teachers/:tname/comments/:id', () => {
       var expectedTeacher = {
           'name': "John Doe"
       }
+      //needs an id will probably be 1
       var expectedComment = {
             body: "Fun class",
            date: Date.now(),
            knowhow: "Took class"
     }
       chai.request(app)
-      .delete('/schools/'+ expectedSchool.name + '/teachers/' + expectedSchool.expectedTeacher.name + '/comments/' + expectedSchool.expectedTeacher.name.expectedComment.id)
+      .delete('/schools/'+ expectedSchool.name + '/teachers/' + expectedTeacher.name + '/comments/' + expectedComment.id)
       .end((err, res) => {
         res.should.have.status(200);
         res.body.message.should.eql("Comment successfully deleted!");
@@ -338,35 +270,5 @@ describe('/DELETE schools/:sname/teachers/:tname/comments/:id', () => {
     });
   });
 
-// //Test for all comments
-// describe('/GET /:name/teachers/:tname/comments', () => {
-//        it('it should get all comments', (done) => {
-//          var expectedSchool = new School({
-//            name:   "Illinois Institute of Technology",
-//            location:    "Chicago, IL",
-//            teachers: [{
-//              name: "Jane Doe",
-//              comments: [{
-//                body: "Fun class",
-//                date: Date.now(),
-//                knowhow: "Took class"
-//                }]
-//              }]
-//              });
-//            expectedSchool.save();
-//            console.log(expectedSchool.name);
-//            console.log(expectedSchool.teachers[0].name);
-//           console.log(expectedSchool.teachers[0].comments[0].body);
-//            chai.request(app)
-//                .get('/schools/' + expectedSchool.name + '/teachers/' + expectedSchool.teachers[0].name + '/comments')
-//                .end((err, res) => {
-//                    //res.should.have.status(200);
-//                    console.log(res.body.teachers[0].name);
-//                    res.body.teachers[0].name.should.be.eql(expectedSchool.teachers[0].name);
-//                     res.body.teachers[0].comments[0].body.should.be.eql(expectedSchool.teachers[0].comments[0].body);
-//                    done();
-//                });
-//        });
-//    });
 
 });
