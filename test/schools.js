@@ -200,9 +200,9 @@ describe('/POST /schools/:sname/teachers/:tname/', () =>{
       res.should.have.status(200);
       res.body.message.should.eql("Teacher successfully added!");
       done();
-    })
-  })
-})*/
+    }); 
+  });
+});*/
 
 //***** I think /:tname needs the GET and POST so my pathing may work.*****
 
