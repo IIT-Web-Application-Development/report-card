@@ -29,11 +29,12 @@ var getSchool = function(schoolname) {
 	return schools.find(findSchool);
 };
 
-var getTeacher = function(teachername) {
-	function findTeacher(teacher) {
-    return school.school.name === teachername;
+var getTeacher = function(schoolname,teachername) {
+  var school = getSchool(schoolname);
+  function findTeacher(teacher) {
+    return teacher.name === teachername;
   }
-	return schools.find(findTeacher);
+	return school.teachers.find(findTeacher);
 };
 
 router.route('/:sname')
@@ -66,15 +67,16 @@ let schoolname = req.params.sname;
 
 router.route('/:name/teachers/:tname')
 .get(function(req, res) {
-	var schoolName = req.params.name;
-  var teacherName = req.params.tname;
+	var schoolname = req.params.name;
+  var teachername = req.params.tname;
 	// let teacher = School.findOne({ schoolName: req.params.tname});
 	// teacher.exec((err, teacher) => {
 	// 	if(err) res.status(404).send(err)
 	// 	res.json(teacher)
 	// });
+  getSchool(schoolname)
   res.status(200);
-  res.json(getTeacher(teacherName));
+  res.json(getTeacher(schoolname,teachername));
 });
 
 //routes for comments
