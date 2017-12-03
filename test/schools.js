@@ -206,7 +206,6 @@ describe('/POST /schools/:sname/teachers/:tname/', () =>{
 
 //***** I think /:tname needs the GET and POST so my pathing may work.*****
 
-
 //Gets all comments
 describe('/GET schools/:sname/teachers/:tname/comments', ()=> {
   it('it should get all comments', (done) => {
