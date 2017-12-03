@@ -161,6 +161,183 @@ describe('Schools', () => {
   });
 });
 
+//   describe('/GET schools/:sname/teacher/:tname', () => {
+//     it('it should return teacher based on teacher name', (done) => {
+//       var expectedSchool = new School({
+//         name:    "Illinois Institute of Technology",
+//         location:    "Chicago, IL",
+//         teachers:
+//         [{name: "Jane Doe",
+//         comments: [{
+//           body: "Fun class",
+//           date: Date.now(),
+//           knowhow: "Took class"
+//         }]
+//       }]
+//     });
+//     expectedSchool.save();
+//     chai.request(app)
+//     .get('/schools/' + expectedSchool.name + '/teachers/' + expectedSchool.teachers[0].name)
+//     .end((err, res) => {
+//       res.should.have.status(200);
+//       res.body.should.be.a('object');
+//       res.body.teachers[0].name.should.be.eql(expectedSchool.teachers[0].name);
+//     //  res.body.comments.should.be.eql(expectedSchool.teachers[0].name.comments[0]);
+//       done();
+//     });
+//   });
+// });
+//
+
+/*
+  //tried to make test for :tname
+
+describe('/GET /schools/:sname/teachers/:tname', () => {
+  it('it should get teachers specific by name', (done) => {
+    var expectedSchool = {
+          'name':    "Illinois Institute of Technology",
+          'location':    "Chicago, IL"
+    }
+    var expectedTeacher = {
+          'name': "John Doe"
+    }    
+    chai.request(app)
+    .get('/schools/' + expectedSchool.name + '/teachers/' + expectedTeacher.name)
+    .end((err,res) => {
+          res.should.have.status(200);
+          res.body.should.have.property('name');
+          done();
+    });
+  });
+});
+
+describe('/POST /schools/:sname/teachers/:tname/', () =>{
+  it('it should post teacher specificby name', (done) =>{
+    var expectedSchool = {
+          'name':    "Illinois Institute of Technology",
+          'location':    "Chicago, IL"
+    }
+    var expectedTeacher = {
+          'name': "John Doe"
+    } 
+    chai.request(app)
+    .post('/schools/' + expectedSchool.name + '/teachers/' + expectedTeacher.name)
+    .send(expectedTeacher)
+    .end((err, res) =>{
+      res.should.have.status(200);
+      res.body.message.should.eql("Teacher successfully added!");
+      done();
+    }); 
+  });
+});*/
+
+//***** I think /:tname needs the GET and POST so my pathing may work.*****
+
+//Gets all comments
+describe('/GET schools/:sname/teachers/:tname/comments', ()=> {
+  it('it should get all comments', (done) => {
+    var expectedSchool = {
+          'name':    "Illinois Institute of Technology",
+          'location':    "Chicago, IL"
+    }
+    var expectedTeacher = {
+          'name': "John Doe"
+    }
+    var expectedComments = {
+            body: "Fun class",
+           date: Date.now(),
+           knowhow: "Took class"
+    }
+    chai.request(app)
+    .get('/schools/' + expectedSchool.name + '/teachers/' + expectedSchool.expectedTeacher.name + '/comments')
+    .end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.be.a('array');
+      res.body.length.should.be.eql(1);
+      done();
+    });
+  });
+});
+//Post all comments
+describe('/POST schools/:sname/teachers/:tname/comments/', () =>{
+  it('it should post all comments', (done) =>{
+    var expectedSchool = {
+          'name':    "Illinois Institute of Technology",
+          'location':    "Chicago, IL"
+    }
+    var expectedTeacher = {
+          'name': "John Doe"
+    }
+    var expectedComments = {
+            body: "Fun class",
+           date: Date.now(),
+           knowhow: "Took class"
+    }
+    chai.request(app)
+    .post('/schools/'+ expectedSchool.name + '/teachers/' + expectedSchool.expectedTeacher.name + '/comments/')
+    .send(expectedComments)
+    .end((err, res) =>{
+      res.should.have.status(200);
+      res.body.message.should.eql("Comment successfully added!");
+      done();
+    });
+  });
+});
+
+//gets a specific comment
+describe('/GET schools/:sname/teachers/:tname/comments/:id', ()=> {
+  it('it should get a speciffic comment', (done) => {
+    var expectedSchool = {
+          'name':    "Illinois Institute of Technology",
+          'location':    "Chicago, IL"
+    }
+    var expectedTeacher = {
+          'name': "John Doe"
+    }
+    var expectedComment = {
+           body: "Fun class",
+           date: Date.now(),
+           knowhow: "Took class"
+    }
+    chai.request(app)
+    .get('/schools/'+ expectedSchool.name + '/teachers/' + expectedSchool.expectedTeacher.name + '/comments/' + expectedSchool.expectedTeacher.name.expectedComments.id) 
+    .end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.have.property('body');
+      res.body.should.have.property('date');
+      res.body.should.have.property('knowhow');
+      done();
+    });
+  });
+});
+
+//deletes the specific comment
+describe('/DELETE schools/:sname/teachers/:tname/comments/:id', () => {
+      it('it should post a speciffic comment', (done) => {
+      var expectedSchool =
+      {
+          'name':    "Illinois Institute of Technology",
+          'location':    "Chicago, IL"
+
+      }
+      var expectedTeacher = {
+          'name': "John Doe"
+      }
+      var expectedComment = {
+            body: "Fun class",
+           date: Date.now(),
+           knowhow: "Took class"
+    }
+      chai.request(app)
+      .delete('/schools/'+ expectedSchool.name + '/teachers/' + expectedSchool.expectedTeacher.name + '/comments/' + expectedSchool.expectedTeacher.name.expectedComment.id)
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.message.should.eql("Comment successfully deleted!");
+          done();
+      });
+    });
+  });
+
 // //Test for all comments
 // describe('/GET /:name/teachers/:tname/comments', () => {
 //        it('it should get all comments', (done) => {
