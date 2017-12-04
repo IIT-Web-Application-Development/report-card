@@ -94,13 +94,13 @@ router.route('/:name/teachers/:tname')
 
 
 //possible routes with getComment
-router.route('/:name/teachers/:tname/comments')
+router.route('/:sname/teachers/:tname/comments')
 .get(function(req, res) {
 	let schoolname = req.params.sname;
 	let	teachername = req.params.tname;
 
 	res.status(200);
-	res.json(getSchool(schoolname).getTeacher(teachername).comments);
+	res.json(getTeacher(schoolname,teachername).comments);
 });
 
 .post(function(req, res){
@@ -110,19 +110,19 @@ router.route('/:name/teachers/:tname/comments')
 	var newComment = req.body;
 	newComment.id = id.id;
 	newComment.comments =[ ];
-	getSchool(schoolname).getTeacher(teachername).comments.push(newComment);
+	getTeacher(schoolname,teachername).comments.push(newComment);
 	res.status(200);
 		res.json({message: "Comment successfully added!", newComment})
 		ccount + 1;
 });
 
-router.route('/:name/teachers/:tname/comments/:id')
+router.route('/:sname/teachers/:tname/comments/:id')
 .get(function(req,res){
 	var schoolname = req.params.sname;
 	var teachername = req.params.tname;
 	var commentid = req.params.id;
 	getSchool(schoolname)
-	getTeacher(teachername)
+	getTeacher(schoolname,teachername)
 	res.status(200);
 	res.json(getComment(schoolname, teachername, commentid));
 });
@@ -130,6 +130,7 @@ router.route('/:name/teachers/:tname/comments/:id')
 .delete(function(req.res){	
 	var schoolname = req.params.sname;
 	var teachername = req.params.tname;
+
 	var commentid = req.params.id;
 	if(commentid != ccount){
 		res.status(404);
