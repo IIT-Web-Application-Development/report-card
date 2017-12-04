@@ -6,6 +6,7 @@ var router = express.Router();
 var schools = [ ];
 var scount = 0;
 var tcount = 0;
+var ccount = 0;
 //routes for /schools
 router.route('/')
 .get(function(req, res) {
@@ -36,6 +37,17 @@ var getTeacher = function(schoolname,teachername) {
   }
 	return school.teachers.find(findTeacher);
 };
+
+//added getCommnet
+var getComment = function(schoolname,teachername,commentid){
+	var school = getSchool(schoolname);
+	var teacher = getTeacher(teachername);
+	function findComment(commentID){
+		return commentID.id === commentid;
+	}
+	return school.teachers.find(findComment);
+};
+
 
 router.route('/:sname')
 	.get(function(req, res) {
@@ -79,6 +91,56 @@ router.route('/:name/teachers/:tname')
   res.json(getTeacher(schoolname,teachername));
 });
 
+
+
+//possible routes with getComment
+router.route('/:name/teachers/:tname/comments')
+.get(function(req, res) {
+	let schoolname = req.params.sname;
+	let	teachername = req.params.tname;
+
+	res.status(200);
+	res.json(getSchool(schoolname).getTeacher(teachername).comments);
+});
+
+post(function(req, res){
+	let schoolname = req.params.sname;
+	let teachername = req.params.tname;
+	var id = {"id" : ccount};
+	var newComment = req.body;
+	newComment.id = id.id;
+	newComment.comments =[ ];
+	getSchool(schoolname).getTeacher(teachername).comments.push(newComment);
+	res.status(200);
+		res.json({message: "Comment successfully added!", newComment})
+		ccount + 1;
+});
+
+router.route('/:name/teachers/:tname/comments/:id')
+.get(function(req,res){
+	var schoolname = req.params.sname;
+	var teachername = req.params.tname;
+	var commentid = req.params.id;
+	getSchool(schoolname)
+	getTeacher(teachername)
+	res.status(200);
+	res.json(getComment(schoolname, teachername, commentid));
+});
+
+.delete(function(req.res){	
+	var commentid = req.params.id;
+	if(commentid != ccount){
+		res.status(404);
+		res.json({"message" : "Comment id not found: " + commentid})
+	}
+	else{
+		delete commentid;
+		res.send("Comment Deleted.")
+	}
+
+});
+
+/*
 //routes for comments
 router.route('/:name/teachers/:tname/comments')
 .get(function(req, res) {
@@ -89,164 +151,6 @@ router.route('/:name/teachers/:tname/comments')
 	let comments = School.findOne({ schoolName: req.params.tname}, {comments: 1});
 	comments.exec((err, comments) => {
 		if(err) res.send(err);
-
-		/*(res.body.CommunicationWithStudents){
-			case "A":
-				avgGrade = avgGrade +4;
-				break;
-			case "a":
-				avgGrade = avgGrade +4;
-				break;
-			case "B":
-				avgGrade = avgGrade +3;
-				break;
-			case "b":
-				avgGrade = avgGrade +3;
-				break;
-			case "C":
-				avgGrade = avgGrade +2;
-				break;
-			case "c":
-				avgGrade = avgGrade +2;
-				break;
-			case "D":
-				avgGrade = avgGrade +1;
-				break;
-			case "d":
-				avgGrade = avgGrade +1;
-				break;
-			case "F":
-				avgGrade = avgGrade +0;
-				break;
-			case "f":
-				avgGrade = avgGrade +0;
-				break;
-			default:
-				break;
-		}
-		switch(res.body.LectureAbility){
-			case "A":
-				avgGrade = avgGrade +4;
-				break;
-			case "a":
-				avgGrade = avgGrade +4;
-				break;
-			case "B":
-				avgGrade = avgGrade +3;
-				break;
-			case "b":
-				avgGrade = avgGrade +3;
-				break;
-			case "C":
-				avgGrade = avgGrade +2;
-				break;
-			case "c":
-				avgGrade = avgGrade +2;
-				break;
-			case "D":
-				avgGrade = avgGrade +1;
-				break;
-			case "d":
-				avgGrade = avgGrade +1;
-				break;
-			case "F":
-				avgGrade = avgGrade +0;
-				break;
-			case "f":
-				avgGrade = avgGrade +0;
-				break;
-			default:
-				break;
-		}
-		switch(res.body.Helpfulness){
-			case "A":
-				avgGrade = avgGrade +4;
-				break;
-			case "a":
-				avgGrade = avgGrade +4;
-				break;
-			case "B":
-				avgGrade = avgGrade +3;
-				break;
-			case "b":
-				avgGrade = avgGrade +3;
-				break;
-			case "C":
-				avgGrade = avgGrade +2;
-				break;
-			case "c":
-				avgGrade = avgGrade +2;
-				break;
-			case "D":
-				avgGrade = avgGrade +1;
-				break;
-			case "d":
-				avgGrade = avgGrade +1;
-				break;
-			case "F":
-				avgGrade = avgGrade +0;
-				break;
-			case "f":
-				avgGrade = avgGrade +0;
-				break;
-			default:
-				break;
-		}
-		switch(res.body.Understandability){
-			case "A":
-				avgGrade = avgGrade +4;
-				break;
-			case "a":
-				avgGrade = avgGrade +4;
-				break;
-			case "B":
-				avgGrade = avgGrade +3;
-				break;
-			case "b":
-				avgGrade = avgGrade +3;
-				break;
-			case "C":
-				avgGrade = avgGrade +2;
-				break;
-			case "c":
-				avgGrade = avgGrade +2;
-				break;
-			case "D":
-				avgGrade = avgGrade +1;
-				break;
-			case "d":
-				avgGrade = avgGrade +1;
-				break;
-			case "F":
-				avgGrade = avgGrade +0;
-				break;
-			case "f":
-				avgGrade = avgGrade +0;
-				break;
-			default:
-				break;
-		}
-
-		avgGrade = (avgGrade/4)
-		if(avgGrade >= 3.5 && avgGrade <= 4.0){
-			avgLetter = "A";
-		}
-		else if(avgGrade < 3.5 && avgGrade >= 3.0){
-			avgLetter = "B";
-		}
-		else if(avgGrade < 3.0 && avgGrade >= 2.5){
-			avgLetter = "C";
-		}
-		else if(avgGrade < 2.5 && avgGrade >= 2.0){
-			avgLetter = "D";
-		}
-		else {
-			avgLetter = "F";
-		}
-			do not know how to display average letter grade after in post
-
-		*/
-
 		res.json(comments);
 	});
 })
@@ -255,8 +159,11 @@ router.route('/:name/teachers/:tname/comments')
 	newComment.save((err, comment) => {
 		if(err) res.status(400).send(err)
 		res.json({message: "Comment successfully added!", comment})
+		ccount +1;
 	});
 });
+
+
 
 router.route('/:name/teachers/:tname/comments/:id')
 	.get(function(req, res) {
@@ -273,6 +180,6 @@ router.route('/:name/teachers/:tname/comments/:id')
 
 	  	res.json({message: "Comment successfully deleted!"})
 	  });
-	});
+	}); */
 
 module.exports = router;

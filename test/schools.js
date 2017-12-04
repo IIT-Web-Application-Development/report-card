@@ -163,31 +163,6 @@ describe('Schools', () => {
 
 //***** I think /:tname needs the GET and POST so my pathing may work.*****
 
-//Gets all comments
-describe('/GET schools/:sname/teachers/:tname/comments', ()=> {
-  it('it should get all comments', (done) => {
-    var expectedSchool = {
-          'name':    "Illinois Institute of Technology",
-          'location':    "Chicago, IL"
-    }
-    var expectedTeacher = {
-          'name': "John Doe"
-    }
-    var expectedComments = {
-          body: "Fun class",
-           date: Date.now(),
-           knowhow: "Took class"
-    }
-    chai.request(app)
-    .get('/schools/' + expectedSchool.name + '/teachers/' + expectedTeacher.name + '/comments')
-    .end((err, res) => {
-      res.should.have.status(200);
-      res.body.should.be.a('array');
-      res.body.length.should.be.eql(1);
-      done();
-    });
-  });
-});
 //Post all comments
 describe('/POST schools/:sname/teachers/:tname/comments/', () =>{
   it('it should post all comments', (done) =>{
@@ -199,7 +174,8 @@ describe('/POST schools/:sname/teachers/:tname/comments/', () =>{
           'name': "John Doe"
     }
     var expectedComments = {
-            body: "Fun class",
+          
+           body: "Fun class",
            date: Date.now(),
            knowhow: "Took class"
     }
@@ -213,6 +189,33 @@ describe('/POST schools/:sname/teachers/:tname/comments/', () =>{
     });
   });
 });
+//Gets all comments
+describe('/GET schools/:sname/teachers/:tname/comments', ()=> {
+  it('it should get all comments', (done) => {
+    var expectedSchool = {
+          'name':    "Illinois Institute of Technology",
+          'location':    "Chicago, IL"
+    }
+    var expectedTeacher = {
+          'name': "John Doe"
+    }
+    var expectedComments = {
+           
+           body: "Fun class",
+           date: Date.now(),
+           knowhow: "Took class"
+    }
+    chai.request(app)
+    .get('/schools/' + expectedSchool.name + '/teachers/' + expectedTeacher.name + '/comments')
+    .end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.be.a('array');
+      res.body.length.should.be.eql(1);
+      done();
+    });
+  });
+});
+
 
 //gets a specific comment
 describe('/GET schools/:sname/teachers/:tname/comments/:id', ()=> {
@@ -226,6 +229,7 @@ describe('/GET schools/:sname/teachers/:tname/comments/:id', ()=> {
     }
     //needs an id will probably be 1
     var expectedComment = {
+           id: 0,
            body: "Fun class",
            date: Date.now(),
            knowhow: "Took class"
@@ -256,7 +260,8 @@ describe('/DELETE schools/:sname/teachers/:tname/comments/:id', () => {
       }
       //needs an id will probably be 1
       var expectedComment = {
-            body: "Fun class",
+           id:0,
+           body: "Fun class",
            date: Date.now(),
            knowhow: "Took class"
     }
