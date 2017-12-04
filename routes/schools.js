@@ -42,10 +42,10 @@ var getTeacher = function(schoolname,teachername) {
 var getComment = function(schoolname,teachername,commentid){
 	var school = getSchool(schoolname);
 	var teacher = getTeacher(teachername);
-	function findComment(commentID){
-		return commentID.id === commentid;
+	function findComment(comment){
+		return comment.id === commentid;
 	}
-	return school.teachers.find(findComment);
+	return school.teachers.comments.find(findComment);
 };
 
 
@@ -130,15 +130,15 @@ router.route('/:sname/teachers/:tname/comments/:id')
 .delete(function(req.res){	
 	var schoolname = req.params.sname;
 	var teachername = req.params.tname;
-
 	var commentid = req.params.id;
+	var delComment = [ ];
 	if(commentid != ccount){
 		res.status(404);
-		res.json({"message" : "Comment id not found: " + commentid})
+		res.json({message : "Comment id not found: " + commentid})
 	}
 	else{
-		delete schools.teachers.comments.commentid;
-		res.send("Comment Deleted.")
+		delete getComment((schoolname, teachername, commentid));
+		res.json({message: "Comment successfully deleted!", delComment})
 	}
 
 });
