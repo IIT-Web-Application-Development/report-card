@@ -8,10 +8,6 @@ let expect = chai.expect;
 chai.use(chaiHttp);
 
 describe('Schools', () => {
-  // beforeEach((done) => {
-  //   schools = [ ];
-  //     done();
-  // });
   describe('/GET schools', () => {
     it('it should return empty array when no schools are present', (done) => {
       chai.request(app)
@@ -26,26 +22,22 @@ describe('Schools', () => {
   });
   describe('/POST schools', () => {
     it('it should create a school', (done) => {
-      var expectedSchool =
+      var requestedSchool =
       {
         'name':    "Illinois Institute of Technology",
         'location':    "Chicago, IL"
-
-    }
+      }
       chai.request(app)
       .post('/schools')
-      .send(expectedSchool)
+      .send(requestedSchool)
       .end((err, res) => {
         res.should.have.status(200);
         res.body.message.should.eql("School successfully added!");
-
-          done();
-
+        done();
       });
-
     });
   });
-    describe('/GET schools', () => {
+  describe('/GET schools', () => {
     it('it should return all schools', (done) => {
       chai.request(app)
       .get('/schools')
@@ -53,27 +45,20 @@ describe('Schools', () => {
         res.should.have.status(200);
         res.body.should.be.a('array');
         res.body.length.should.be.eql(1);
-        // let returnedSchool = res.body[0];
-        // console.log(returnedSchool);
-        // returnedSchool.name.should.be.eql(expectedSchool.name);
-        // returnedSchool.location.should.be.eql(expectedSchool.location);
         done();
       });
     });
   });
   describe('/GET schools/:sname', () => {
     it('it should return school based on school name', (done) => {
-      var expectedSchool =
+      var requestedSchool =
       {
         'name':    "Illinois Institute of Technology",
         'location':    "Chicago, IL"
-
-    }
+      }
         chai.request(app)
-        .get('/schools/' + expectedSchool.name)
-
+        .get('/schools/' + requestedSchool.name)
         .end((err, res) => {
-          //console.log(res.body);
           res.should.have.status(200);
           res.body.should.have.property('name');
           res.body.should.have.property('location');
@@ -81,107 +66,99 @@ describe('Schools', () => {
         });
       });
     });
-
-    describe('/POST schools/:sname/teacher', () => {
+  describe('/POST schools/:sname/teacher', () => {
       it('it should create a teacher', (done) => {
-        var expectedSchool =
+        var requestedSchool =
         {
           'name':    "Illinois Institute of Technology",
           'location':    "Chicago, IL"
-
-      }
-        var expectedTeacher =
+        }
+        var requestedTeacher =
         {
           'name': "John Doe"
         }
       chai.request(app)
-      .post('/schools/' + expectedSchool.name + '/teachers')
-      .send(expectedTeacher)
+      .post('/schools/' + requestedSchool.name + '/teachers')
+      .send(requestedTeacher)
       .end((err, res) => {
         res.should.have.status(200);
         res.body.message.should.eql("Teacher successfully added!");
-          done();
+        done();
+        });
       });
     });
-  });
-
-    //test for post and get of a teacher in a school
-    describe('/GET schools/:sname/teachers', () => {
+  //test for post and get of a teacher in a school
+  describe('/GET schools/:sname/teachers', () => {
       it('it should return all teachers', (done) => {
-        var expectedSchool =
+        var requestedSchool =
         {
           'name':    "Illinois Institute of Technology",
           'location':    "Chicago, IL"
-      }
-        var expectedTeacher =
+        }
+        var requestedTeacher =
         {
           'name': "John Doe"
         }
         chai.request(app)
-        .get('/schools/' + expectedSchool.name + '/teachers')
+        .get('/schools/' + requestedSchool.name + '/teachers')
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('array');
           res.body.length.should.be.eql(1);
-          // let returnedSchool = res.body;
-          // console.log(returnedSchool.name);
-          // returnedSchool.name.should.be.eql(expectedSchool.name);
-          // returnedSchool.location.should.be.eql(expectedSchool.location);
-          //returnedSchool.teachers.should.be.eql(expectedSchool.teachers)
           done();
         });
       });
     });
-
-
   describe('/GET schools/:sname/teacher/:tname', () => {
     it('it should return teacher based on teacher name', (done) => {
-      var expectedSchool =
+      var requestedSchool =
       {
         'name':    "Illinois Institute of Technology",
         'location':    "Chicago, IL"
-
       }
-      var expectedTeacher =
+      var requestedTeacher =
       {
         'name': "John Doe"
       }
     chai.request(app)
-    .get('/schools/' + expectedSchool.name + '/teachers/' + expectedTeacher.name)
-
+    .get('/schools/' + requestedSchool.name + '/teachers/' + requestedTeacher.name)
     .end((err, res) => {
       res.should.have.status(200);
-      // res.body.should.be.a('object');
-      // res.body.should.have.property('name');
-      // res.body.length.should.be.eql(1);
       res.body.should.have.property('name');
-    //  res.body.comments.should.be.eql(expectedSchool.teachers[0].name.comments[0]);
       done();
+      });
     });
   });
-});
-
 //***** I think /:tname needs the GET and POST so my pathing may work.*****
-
 //Post all comments
 describe('/POST schools/:sname/teachers/:tname/comments/', () =>{
-  it('it should post all comments', (done) =>{
-    var expectedSchool = {
+  it('it should post comments', (done) =>{
+    var requestedSchool =
+    {
           'name':    "Illinois Institute of Technology",
           'location':    "Chicago, IL"
     }
-    var expectedTeacher = {
+    var requestedTeacher =
+    {
           'name': "John Doe"
     }
+<<<<<<< b8611802f6037b552a8821c7c7e348ab3c7a412c
     var expectedComments = {
           
            'body': "Fun class",
            'date': Date.now(),
            'knowhow': "Took class"
+=======
+    var requestedComment =
+    {
+           body: "Fun class",
+           date: Date.now(),
+           knowhow: "Took class"
+>>>>>>> Fixed all routes and tests everything is working now
     }
     chai.request(app)
-    .post('/schools/'+ expectedSchool.name + '/teachers/' + expectedTeacher.name + '/comments/')
-    .send(expectedComments)
+    .post('/schools/'+ requestedSchool.name + '/teachers/' + requestedTeacher.name + '/comments/')
+    .send(requestedComment)
     .end((err, res) =>{
       res.should.have.status(200);
       res.body.message.should.eql("Comment successfully added!");
@@ -192,41 +169,52 @@ describe('/POST schools/:sname/teachers/:tname/comments/', () =>{
 //Gets all comments
 describe('/GET schools/:sname/teachers/:tname/comments', ()=> {
   it('it should get all comments', (done) => {
-    var expectedSchool = {
+    var requestedSchool =
+    {
           'name':    "Illinois Institute of Technology",
           'location':    "Chicago, IL"
     }
-    var expectedTeacher = {
+    var requestedTeacher =
+    {
           'name': "John Doe"
     }
+<<<<<<< b8611802f6037b552a8821c7c7e348ab3c7a412c
     var expectedComments = {
            
            'body': "Fun class",
            'date': Date.now(),
            'knowhow': "Took class"
+=======
+    var requestedComments =
+    {
+           body: "Fun class",
+           date: Date.now(),
+           knowhow: "Took class"
+>>>>>>> Fixed all routes and tests everything is working now
     }
     chai.request(app)
-    .get('/schools/' + expectedSchool.name + '/teachers/' + expectedTeacher.name + '/comments')
+    .get('/schools/' + requestedSchool.name + '/teachers/' + requestedTeacher.name + '/comments')
     .end((err, res) => {
       res.should.have.status(200);
       res.body.should.be.a('array');
       res.body.length.should.be.eql(1);
       done();
+      });
     });
   });
-});
-
-
 //gets a specific comment
-describe('/GET schools/:sname/teachers/:tname/comments/:id', ()=> {
+describe('/GET schools/:sname/teachers/:tname/comments/:cid', ()=> {
   it('it should get a speciffic comment', (done) => {
-    var expectedSchool = {
+    var requestedSchool =
+    {
           'name':    "Illinois Institute of Technology",
           'location':    "Chicago, IL"
     }
-    var expectedTeacher = {
+    var requestedTeacher =
+    {
           'name': "John Doe"
     }
+<<<<<<< b8611802f6037b552a8821c7c7e348ab3c7a412c
     //needs an id will probably be 1
     var expectedComment = {
            'id': 0,
@@ -236,6 +224,17 @@ describe('/GET schools/:sname/teachers/:tname/comments/:id', ()=> {
     }
     chai.request(app)
     .get('/schools/'+ expectedSchool.name + '/teachers/' + expectedTeacher.name + '/comments/' + expectedComment.id)
+=======
+    var requestedComment =
+    {
+           id: 0,
+           body: "Fun class",
+           date: Date.now(),
+           knowhow: "Took class"
+    }
+    chai.request(app)
+    .get('/schools/'+ requestedSchool.name + '/teachers/' + requestedTeacher.name + '/comments/' + requestedComment.id)
+>>>>>>> Fixed all routes and tests everything is working now
     .end((err, res) => {
       res.should.have.status(200);
       //res.bodt.should.have.property('id');
@@ -246,19 +245,19 @@ describe('/GET schools/:sname/teachers/:tname/comments/:id', ()=> {
     });
   });
 });
-
 //deletes the specific comment
 describe('/DELETE schools/:sname/teachers/:tname/comments/:id', () => {
       it('it should post a speciffic comment', (done) => {
-      var expectedSchool =
+      var requestedSchool =
       {
           'name':    "Illinois Institute of Technology",
           'location':    "Chicago, IL"
-
       }
-      var expectedTeacher = {
+      var requestedTeacher =
+      {
           'name': "John Doe"
       }
+<<<<<<< b8611802f6037b552a8821c7c7e348ab3c7a412c
       //needs an id will probably be 1
       var expectedComment = {
            'id':0,
@@ -266,15 +265,23 @@ describe('/DELETE schools/:sname/teachers/:tname/comments/:id', () => {
            'date': Date.now(),
            'knowhow': "Took class"
     }
+=======
+      var requestedComment =
+      {
+           id:0,
+           body: "Fun class",
+           date: Date.now(),
+           knowhow: "Took class"
+      }
+>>>>>>> Fixed all routes and tests everything is working now
       chai.request(app)
-      .delete('/schools/'+ expectedSchool.name + '/teachers/' + expectedTeacher.name + '/comments/' + expectedComment.id)
+      .delete('/schools/'+ requestedSchool.name + '/teachers/' + requestedTeacher.name + '/comments/' + requestedComment.id)
       .end((err, res) => {
         res.should.have.status(200);
-        res.body.message.should.eql("Comment successfully deleted!");
-          done();
+        res.body.message.should.eql("Comment deleted successfully!");
+        done();
       });
     });
   });
-
 
 });
