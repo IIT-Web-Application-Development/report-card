@@ -127,14 +127,17 @@ router.route('/:sname/teachers/:tname/comments/:id')
 	res.json(getComment(schoolname, teachername, commentid));
 });
 
-.delete(function(req.res){
+.delete(function(req.res){	
+	var schoolname = req.params.sname;
+	var teachername = req.params.tname;
+
 	var commentid = req.params.id;
 	if(commentid != ccount){
 		res.status(404);
 		res.json({"message" : "Comment id not found: " + commentid})
 	}
 	else{
-		delete commentid;
+		delete schools.teachers.comments.commentid;
 		res.send("Comment Deleted.")
 	}
 
