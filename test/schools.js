@@ -142,19 +142,11 @@ describe('/POST schools/:sname/teachers/:tname/comments/', () =>{
     {
           'name': "John Doe"
     }
-<<<<<<< b8611802f6037b552a8821c7c7e348ab3c7a412c
-    var expectedComments = {
-          
-           'body': "Fun class",
-           'date': Date.now(),
-           'knowhow': "Took class"
-=======
     var requestedComment =
     {
            body: "Fun class",
            date: Date.now(),
            knowhow: "Took class"
->>>>>>> Fixed all routes and tests everything is working now
     }
     chai.request(app)
     .post('/schools/'+ requestedSchool.name + '/teachers/' + requestedTeacher.name + '/comments/')
@@ -178,19 +170,11 @@ describe('/GET schools/:sname/teachers/:tname/comments', ()=> {
     {
           'name': "John Doe"
     }
-<<<<<<< b8611802f6037b552a8821c7c7e348ab3c7a412c
-    var expectedComments = {
-           
-           'body': "Fun class",
-           'date': Date.now(),
-           'knowhow': "Took class"
-=======
     var requestedComments =
     {
            body: "Fun class",
            date: Date.now(),
            knowhow: "Took class"
->>>>>>> Fixed all routes and tests everything is working now
     }
     chai.request(app)
     .get('/schools/' + requestedSchool.name + '/teachers/' + requestedTeacher.name + '/comments')
@@ -214,17 +198,6 @@ describe('/GET schools/:sname/teachers/:tname/comments/:cid', ()=> {
     {
           'name': "John Doe"
     }
-<<<<<<< b8611802f6037b552a8821c7c7e348ab3c7a412c
-    //needs an id will probably be 1
-    var expectedComment = {
-           'id': 0,
-           'body': "Fun class",
-           'date': Date.now(),
-           'knowhow': "Took class"
-    }
-    chai.request(app)
-    .get('/schools/'+ expectedSchool.name + '/teachers/' + expectedTeacher.name + '/comments/' + expectedComment.id)
-=======
     var requestedComment =
     {
            id: 0,
@@ -234,7 +207,6 @@ describe('/GET schools/:sname/teachers/:tname/comments/:cid', ()=> {
     }
     chai.request(app)
     .get('/schools/'+ requestedSchool.name + '/teachers/' + requestedTeacher.name + '/comments/' + requestedComment.id)
->>>>>>> Fixed all routes and tests everything is working now
     .end((err, res) => {
       res.should.have.status(200);
       //res.bodt.should.have.property('id');
@@ -257,15 +229,6 @@ describe('/DELETE schools/:sname/teachers/:tname/comments/:id', () => {
       {
           'name': "John Doe"
       }
-<<<<<<< b8611802f6037b552a8821c7c7e348ab3c7a412c
-      //needs an id will probably be 1
-      var expectedComment = {
-           'id':0,
-           'body': "Fun class",
-           'date': Date.now(),
-           'knowhow': "Took class"
-    }
-=======
       var requestedComment =
       {
            id:0,
@@ -273,7 +236,6 @@ describe('/DELETE schools/:sname/teachers/:tname/comments/:id', () => {
            date: Date.now(),
            knowhow: "Took class"
       }
->>>>>>> Fixed all routes and tests everything is working now
       chai.request(app)
       .delete('/schools/'+ requestedSchool.name + '/teachers/' + requestedTeacher.name + '/comments/' + requestedComment.id)
       .end((err, res) => {
