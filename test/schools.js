@@ -175,9 +175,9 @@ describe('/POST schools/:sname/teachers/:tname/comments/', () =>{
     }
     var expectedComments = {
           
-           body: "Fun class",
-           date: Date.now(),
-           knowhow: "Took class"
+           'body': "Fun class",
+           'date': Date.now(),
+           'knowhow': "Took class"
     }
     chai.request(app)
     .post('/schools/'+ expectedSchool.name + '/teachers/' + expectedTeacher.name + '/comments/')
@@ -201,9 +201,9 @@ describe('/GET schools/:sname/teachers/:tname/comments', ()=> {
     }
     var expectedComments = {
            
-           body: "Fun class",
-           date: Date.now(),
-           knowhow: "Took class"
+           'body': "Fun class",
+           'date': Date.now(),
+           'knowhow': "Took class"
     }
     chai.request(app)
     .get('/schools/' + expectedSchool.name + '/teachers/' + expectedTeacher.name + '/comments')
@@ -229,15 +229,16 @@ describe('/GET schools/:sname/teachers/:tname/comments/:id', ()=> {
     }
     //needs an id will probably be 1
     var expectedComment = {
-           id: 0,
-           body: "Fun class",
-           date: Date.now(),
-           knowhow: "Took class"
+           'id': 0,
+           'body': "Fun class",
+           'date': Date.now(),
+           'knowhow': "Took class"
     }
     chai.request(app)
-    .get('/schools/'+ expectedSchool.name + '/teachers/' + expectedTeacher.name + '/comments/' + expectedComments.id)
+    .get('/schools/'+ expectedSchool.name + '/teachers/' + expectedTeacher.name + '/comments/' + expectedComment.id)
     .end((err, res) => {
       res.should.have.status(200);
+      //res.bodt.should.have.property('id');
       res.body.should.have.property('body');
       res.body.should.have.property('date');
       res.body.should.have.property('knowhow');
@@ -260,10 +261,10 @@ describe('/DELETE schools/:sname/teachers/:tname/comments/:id', () => {
       }
       //needs an id will probably be 1
       var expectedComment = {
-           id:0,
-           body: "Fun class",
-           date: Date.now(),
-           knowhow: "Took class"
+           'id':0,
+           'body': "Fun class",
+           'date': Date.now(),
+           'knowhow': "Took class"
     }
       chai.request(app)
       .delete('/schools/'+ expectedSchool.name + '/teachers/' + expectedTeacher.name + '/comments/' + expectedComment.id)
