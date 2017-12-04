@@ -17,74 +17,53 @@ block content
       // tab content for School
       .tab-content.search-tabs-content
         .tab-pane.active(id="school")
-          div Search School name:
-            input(
-              type= 'text'
-              placeholder= 'Illinois Institute of Technology'
-              class= 'searchschool input'
-              )
-            button Search
+          form(method='POST' action='/schools')
+            div.form-group
+              label(for='school') Add School:
+              input#name.form-control(type='text', placeholder='Illinois Institute of Technology' name='school')
+            button.btn.btn-primary(type='add') Add
 
-          div Add School name:
-            input(
-              type= 'text'
-              placeholder= 'Illinois Institute of Technology'
-              class= 'addschool input'
-              )
-            button Add
+          form(method='GET' action='/schools')
+            div.form-group
+              label(for='school') Search School:
+              input#name.form-control(type='text', placeholder='Illinois Institute of Technology' name='school')
+            button.btn.btn-primary(type='add') Search
+
 
         // tab content for Teacher
         .tab-pane(id="teacher")
           h3 Teacher Information
-          div Search Teacher name:
-            input(
-              type= 'text'
-              placeholder= 'John Smith'
-              class= 'searchteacher input'
-              )
-            button Search
+          form(method='GET' action='/schools/:sname/teacher/:tname')
+            div.form-group
+              label(for='school') Search Teacher:
+              input#name.form-control(type='text', placeholder='John Smith' name='teacher')
+            button.btn.btn-primary(type='search') Search
 
-          div Add Teacher name:
-            input(
-              type= 'text'
-              placeholder= 'John Smith'
-              class= 'addteacher input'
-              )
-            button Add
+          form(method='POST' action='/schools/:sname/teacher')
+            div.form-group
+              label(for='school') Add Teacher:
+              input#name.form-control(type='text', placeholder='John Smith' name='teacher')
+            button.btn.btn-primary(type='add') Add
 
           h3 Teacher Comments
-          div View Teacher comments:
-            input(
-              type= 'text'
-              placeholder= 'John Smith'
-              class= 'viewcomments input'
-              )
-            button View
+          form(method='GET' action='/schools/:sname/teacher/:tname/comments')
+            div.form-group
+              label(for='school') Teacher Comments:
+              input#name.form-control(type='text', placeholder='John Smith' name='teacher')
+            button.btn.btn-primary(type='Search') Search
 
-          div Teacher name:
-            input(
-              type= 'text'
-              placeholder= 'John Smith'
-              class= 'addteachercomments input'
-              )
-            A Comment
-            input(
-              type= 'text'
-              placeholder= 'Teacher is helpful'
-              class= 'addcomments input'
-              )
-            A Knowledge of teacher
-            input(
-              type= 'text'
-              placeholder= 'Took class'
-              class= 'addknowcomments input'
-              )
-            button Add
 
-          div Comment Id:
-            input(
-              type= 'text'
-              placeholder= '2'
-              class= 'deletecomment input'
-              )
-            button Delete
+          form(method='POST' action='/schools/:sname/teacher:tname/comments')
+            div.form-group
+              label(for='school') Add Teacher:
+              input#name.form-control(type='text', placeholder='John Smith' name='teacher')
+              input#name.form-control(type='text', placeholder='Teacher is helpful' name='teacher')
+              input#name.form-control(type='text', placeholder='Took class' name='teacher')
+            button.btn.btn-primary(type='add') Add
+
+          form(method='DELETE' action='/schools/:sname/teacher/:tname/comments/:id')
+            div.form-group
+              label(for='school') Delete Comment:
+              input#name.form-control(type='text', placeholder='2' name='teacher')
+            button.btn.btn-primary(type='Delete') Delete
+            
