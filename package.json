@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "main": "routes/schools.js",
   "scripts": {
-    "start": "SET NODE_ENV=dev && node routes/schools.js",
+    "start": "node routes/schools.js",
     "test": "mocha --timeout 10000"
   },
   "dependencies": {
