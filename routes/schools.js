@@ -114,7 +114,7 @@ app.route('/schools/:sname/teachers/:tname/comments')
   newComment.id = id.id;
   getTeacher(schoolname,teachername).comments.push(newComment);
   res.status(200);
-  res.json({message: "Comment successfully added!", newComment});
+  res.json({message: "Comment successfully added!", newComment, id});
   ccount++;
 });
 
@@ -138,3 +138,5 @@ app.route('/schools/:sname/teachers/:tname/comments/:cid')
 app.listen(3000, function () {
   console.log('Reminder app listening on port 3000')
 });
+
+module.exports = app;

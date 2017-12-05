@@ -9,7 +9,7 @@
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 
-  <link rel="stylesheet" type="text/css" href="../public/stylesheets/style.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
 
 </head>
 
@@ -30,80 +30,87 @@
 
     <div class="tab-content">
       <div role="tabpanel" class="tab-pane active" id="editschool">
-        <div class="space">
+        <div class="space add">
         <h4>Add School</h4>
+        <p>Add a new school to the database</p>
         <label>School Name:<input type="text" placeholder="Illinois Institute of Technology" class="addschool input"/> </label>
         <br>
         <label>Location:<input type="text" placeholder="Chicago, IL" class="addlocation input"/></label>
         <button>Add School</button>
         </div>
         <br>
-        <div class="space">
+        <div class="space search">
         <h4>Search School</h4>
+        <p>Search for schools based on name</p>
         <label>School Name:<input type="text" placeholder="Illinois Institute of Technology" class="searchschool input"/></label>
         <button>Search</button>
         </div>
 
       </div>
       <div role="tabpanel" class="tab-pane" id="editteacher">
-        <div class="space">
+        <div class="space searchT">
         <h4>Teacher Information:</h4>
-        <label>School Name:<input type="text" placeholder="Illinois Institute of Technology" class="searchschool input"/></label>
+        <p>Search for a teacher from a school by name</p>
+        <label>School Name:<input type="text" placeholder="Illinois Institute of Technology" class="searchschool2 input"/></label>
         <br>
-        <label>Search Teacher:<input type="text" placeholder="John Smith" class="searchteacher input"/></label>
+        <label>Search Teacher:<input type="text" placeholder="John Smith" class="searchteacher3 input"/></label>
         <button>Search</button>
         </div>
         <br>
-        <div class="space">
+        <div class="space addT">
           <h4>Add Teacher:</h4>
-        <label>School Name:<input type="text" placeholder="Illinois Institute of Technology" class="addschool input"/></label>
+          <p>Add a new teacher to a school.</p>
+        <label>School Name:<input type="text" placeholder="Illinois Institute of Technology" class="blah input"/></label>
         <br>
-        <label>Add Teacher:<input type="text" placeholder="John Smith" class="addteacher input"/></label>
+        <label>Add Teacher:<input type="text" placeholder="John Smith" class="blah2 input"/></label>
         <button>Add</button>
         </div>
         <br>
-        <div class="space">
-          <h4>View All Teachers:</h4>
-        <label>School Name:<input type="text" placeholder="Illinois Institute of Technology" class="findschool input"/></label>
-        <br>
-        <label>Teacher Name:<input type="text" placeholder="John Smith" class="findteacher input"/></label>
+        <div class="space viewT">
+        <h4>View All Teachers:</h4>
+        <p>Here you can view all the current teachers of a school</p>
+        <label>School Name:<input type="text" placeholder="Illinois Institute of Technology" class="findS input"/></label>
         <button>View All</button>
         </div>
       </div>
 
       <div role="tabpanel" class="tab-pane" id="editcomment">
-      <div class="space">
+      <div class="space viewComments">
         <h4>View All Teacher Comments:</h4>
-        <label>School Name:<input type="text" placeholder="Illinois Institute of Technology" class="viewschool input"/></label>
+        <p>View all the current comments of a teacher</p>
+        <label>School Name:<input type="text" placeholder="Illinois Institute of Technology" class="viewschool2 input"/></label>
         <br>
-        <label>Teacher Name:<input type="text" placeholder="John Smith" class="viewteacher input"/></label>
+        <label>Teacher Name:<input type="text" placeholder="John Smith" class="viewteacher2 input"/></label>
         <button>View</button>
         </div>
         <br>
-        <div class="space">
-          <h4>View Teacher Comment:</h4>
+        <div class="space viewComment">
+        <h4>View Teacher Comment:</h4>
+        <p>View a comment of a teacher based on comment id</p>
         <label>School Name:<input type="text" placeholder="Illinois Institute of Technology" class="viewschool input"/></label>
         <br>
         <label>Teacher Name:<input type="text" placeholder="John Smith" class="viewteacher input"/></label>
         <br>
-        <label>Comment ID:<input type="text" placeholder="2" class="viewcomment input"/></label>
+        <label>Comment ID:<input type="text" placeholder="2" class="viewcomment2 input"/></label>
         <button>View</button>
         </div>
         <br>
-        <div class="space">
+        <div class="space addComment">
         <h4>Add Teacher Comment:</h4>
-        <label>School Name:<input type="text" placeholder="Illinois Institute of Technology" class="addschool" input"/></label>
+        <p>Add a new comment for a teacher</p>
+        <label>School Name:<input type="text" placeholder="Illinois Institute of Technology" class="addschool3" input"/></label>
         <br>
-        <label>Teacher Name:<input type="text" placeholder="John Smith" class="addteacher input"/></label>
+        <label>Teacher Name:<input type="text" placeholder="John Smith" class="addteacher3 input"/></label>
         <br>
-        <label>Comment:<input type="text" placeholder="Teacher is helpful" class="addcomment input"/></label>
+        <label>Comment:<input type="text" placeholder="Teacher is helpful" class="addcomment3 input"/></label>
         <br>
-        <label>Knowledge of teacher:<input type="text" placeholder="Took class" class="addknowhow input"/></label>
+        <label>Knowledge of teacher:<input type="text" placeholder="Took class" class="addknowhow3 input"/></label>
         <button>Add</button>
         </div>
         <br>
-        <div class="space">
+        <div class="space delete">
         <h4>Delete Teacher Comment:</h4>
+        <p>Delete a teacher's comment based on comment id</p>
         <label>School Name:<input type="text" placeholder="Illinois Institute of Technology" class="deleteschool" input"/></label>
         <br>
         <label>Teacher Name:<input type="text" placeholder="John Smith" class="deleteteacher input"/></label>
@@ -119,7 +126,7 @@
 
   <script src="http://code.jquery.com/jquery-latest.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js "></script>
-  <script src="../app.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
 
