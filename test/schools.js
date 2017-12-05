@@ -66,7 +66,7 @@ describe('Schools', () => {
         });
       });
     });
-  describe('/POST schools/:sname/teacher', () => {
+  describe('/POST schools/:sname/teachers', () => {
       it('it should create a teacher', (done) => {
         var requestedSchool =
         {
