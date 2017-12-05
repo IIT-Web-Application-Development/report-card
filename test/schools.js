@@ -1,8 +1,10 @@
+process.env.NODE_ENV = 'test';
+
 let chai = require('chai');
 let chaiHttp = require('chai-http');
-let app = require('../app');
+let server = require('../routes/schools.js');
 let should = chai.should();
-let expect = chai.expect;
+//let expect = chai.expect;
 
 
 chai.use(chaiHttp);
@@ -10,7 +12,7 @@ chai.use(chaiHttp);
 describe('Schools', () => {
   describe('/GET schools', () => {
     it('it should return empty array when no schools are present', (done) => {
-      chai.request(app)
+      chai.request(server)
       .get('/schools')
       .end((err, res) => {
         res.should.have.status(200);
@@ -27,7 +29,7 @@ describe('Schools', () => {
         'name':    "Illinois Institute of Technology",
         'location':    "Chicago, IL"
       }
-      chai.request(app)
+      chai.request(server)
       .post('/schools')
       .send(requestedSchool)
       .end((err, res) => {
@@ -39,7 +41,7 @@ describe('Schools', () => {
   });
   describe('/GET schools', () => {
     it('it should return all schools', (done) => {
-      chai.request(app)
+      chai.request(server)
       .get('/schools')
       .end((err, res) => {
         res.should.have.status(200);
@@ -56,7 +58,7 @@ describe('Schools', () => {
         'name':    "Illinois Institute of Technology",
         'location':    "Chicago, IL"
       }
-        chai.request(app)
+        chai.request(server)
         .get('/schools/' + requestedSchool.name)
         .end((err, res) => {
           res.should.have.status(200);
@@ -77,7 +79,7 @@ describe('Schools', () => {
         {
           'name': "John Doe"
         }
-      chai.request(app)
+      chai.request(server)
       .post('/schools/' + requestedSchool.name + '/teachers')
       .send(requestedTeacher)
       .end((err, res) => {
@@ -99,7 +101,7 @@ describe('Schools', () => {
         {
           'name': "John Doe"
         }
-        chai.request(app)
+        chai.request(server)
         .get('/schools/' + requestedSchool.name + '/teachers')
         .end((err, res) => {
           res.should.have.status(200);
@@ -120,7 +122,7 @@ describe('Schools', () => {
       {
         'name': "John Doe"
       }
-    chai.request(app)
+    chai.request(server)
     .get('/schools/' + requestedSchool.name + '/teachers/' + requestedTeacher.name)
     .end((err, res) => {
       res.should.have.status(200);
@@ -148,7 +150,7 @@ describe('/POST schools/:sname/teachers/:tname/comments/', () =>{
            date: Date.now(),
            knowhow: "Took class"
     }
-    chai.request(app)
+    chai.request(server)
     .post('/schools/'+ requestedSchool.name + '/teachers/' + requestedTeacher.name + '/comments/')
     .send(requestedComment)
     .end((err, res) =>{
@@ -176,7 +178,7 @@ describe('/GET schools/:sname/teachers/:tname/comments', ()=> {
            date: Date.now(),
            knowhow: "Took class"
     }
-    chai.request(app)
+    chai.request(server)
     .get('/schools/' + requestedSchool.name + '/teachers/' + requestedTeacher.name + '/comments')
     .end((err, res) => {
       res.should.have.status(200);
@@ -205,7 +207,7 @@ describe('/GET schools/:sname/teachers/:tname/comments/:cid', ()=> {
            date: Date.now(),
            knowhow: "Took class"
     }
-    chai.request(app)
+    chai.request(server)
     .get('/schools/'+ requestedSchool.name + '/teachers/' + requestedTeacher.name + '/comments/' + requestedComment.id)
     .end((err, res) => {
       res.should.have.status(200);
@@ -236,7 +238,7 @@ describe('/DELETE schools/:sname/teachers/:tname/comments/:id', () => {
            date: Date.now(),
            knowhow: "Took class"
       }
-      chai.request(app)
+      chai.request(server)
       .delete('/schools/'+ requestedSchool.name + '/teachers/' + requestedTeacher.name + '/comments/' + requestedComment.id)
       .end((err, res) => {
         res.should.have.status(200);
