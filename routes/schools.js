@@ -1,6 +1,12 @@
-var express = require('express');
+let express = require('express')
 let bodyParser = require('body-parser')
-var router = express.Router();
+let app = express()
+
+//array to hold schools
+var schools = [ ];
+var scount = 0;
+var tcount = 0;
+var ccount = 0;
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -17,14 +23,10 @@ app.use(bodyParser.json({ type: 'application/json'}));
 app.listen(3000, function () {
   console.log('Reminder app listening on port 3000')
 });
-//array to hold schools
-var schools = [ ];
-var scount = 0;
-var tcount = 0;
-var ccount = 0;
+
 
 //routes for /schools
-router.route('/')
+app.route('/schools')
 .get(function(req, res) {
   res.json(schools);
 })
@@ -64,7 +66,7 @@ var getComment = function(schoolname,teachername,commentid){
 };
 
 // /schools/sname
-router.route('/:sname')
+app.route('/schools/:sname')
 .get(function(req, res) {
   var schoolname = req.params.sname;
   res.status(200);
@@ -72,7 +74,7 @@ router.route('/:sname')
 });
 
 //routes for teachers
-router.route('/:sname/teachers')
+app.route('/schools/:sname/teachers')
 .get(function(req, res) {
   let schoolname = req.params.sname;
   res.status(200);
@@ -90,7 +92,7 @@ router.route('/:sname/teachers')
   tcount++;
 });
 
-router.route('/:sname/teachers/:tname')
+app.route('/schools/:sname/teachers/:tname')
 .get(function(req, res) {
   var schoolname = req.params.sname;
   var teachername = req.params.tname;
@@ -99,7 +101,7 @@ router.route('/:sname/teachers/:tname')
 });
 
 //possible routes with getComment
-router.route('/:sname/teachers/:tname/comments')
+app.route('/schools/:sname/teachers/:tname/comments')
 .get(function(req, res) {
   let schoolname = req.params.sname;
   let	teachername = req.params.tname;
@@ -118,7 +120,7 @@ router.route('/:sname/teachers/:tname/comments')
   ccount++;
 });
 
-router.route('/:sname/teachers/:tname/comments/:cid')
+app.route('/schools/:sname/teachers/:tname/comments/:cid')
 .get(function(req, res){
   var schoolname = req.params.sname;
   var teachername = req.params.tname;
@@ -134,4 +136,4 @@ router.route('/:sname/teachers/:tname/comments/:cid')
   res.json({message: "Comment deleted successfully!"})
 });
 
-module.exports = router;
+module.exports = app;
