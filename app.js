@@ -10,7 +10,7 @@ $(document).ready(function() {
   //   $.get("http://localhost:3000/schools", function(data, status){
   //     var $output = $("<p>");
   //     $output.text(JSON.stringify(data));
-  //     $(".output").html($output);
+  //     $(".display").html($output);
   //   });
   // }
   //calls post /schools
@@ -23,7 +23,7 @@ $(document).ready(function() {
       //  console.log(req);
       var $output = $("<p>");
       $output.text("New School Added: " + $sname);
-      $(".output").html($output);
+      $(".display").html($output);
     }, "json");
   }
   //calls get /schools/:sname
@@ -33,7 +33,7 @@ $(document).ready(function() {
       //console.log(data);
       var $output = $("<p>");
       $output.text("Name: " + data.name + "Location: " + data.location + "Current Teachers: " + data.teachers);
-      $(".output").html($output);
+      $(".display").html($output);
     });
   }
   //calls post /schools/:sname/teachers
@@ -45,7 +45,7 @@ $(document).ready(function() {
     $.post($link, JSON.stringify(newTeacher) , function(req, res){
       var $output = $("<p>");
       $output.text("New Teacher " + $sname + " Added to School: " + $tname);
-      $(".output").html($output);
+      $(".display").html($output);
     });
   }
   //calls get /schools/:sname/teachers
@@ -55,7 +55,7 @@ $(document).ready(function() {
       data.forEach(function (teach) {
         var $output = $("<li>");
         $output.text("Name: " + teach.name);
-        $(".output").append($output);
+        $(".display").append($output);
       });
     });
   }
@@ -66,7 +66,7 @@ $(document).ready(function() {
         //console.log(data);
         var $output = $("<p>");
         $output.text("Name: " + data.name);
-        $(".output").html($output);
+        $(".display").html($output);
       });
     }
     //calls post /schools/:sname/teachers/:tname/comments
@@ -81,7 +81,7 @@ $(document).ready(function() {
       $.post($link, JSON.stringify(newComment) , function(req, res){
         var $output = $("<p>");
         $output.text("New Comment ID: " + req.id);
-        $(".output").html($output);
+        $(".display").html($output);
       });
     }
     //calls get /schools/:sname/teachers/:tname/comments
@@ -91,7 +91,7 @@ $(document).ready(function() {
         data.forEach(function (com) {
           var $output = $("<li>");
           $output.text("Comment: " + com.body + "Date: " + com.date + "Known How?: " + com.knowhow);
-          $(".output").append($output);
+          $(".display").append($output);
         });
       });
     }
@@ -101,7 +101,7 @@ $(document).ready(function() {
       $.get($link, function(data, status){
         var $output = $("<p>");
         $output.text("Comment: " + data.body + "Date: " + data.date + "Known How?: " + data.knowhow + "Id: " + data.id);
-        $(".output").html($output);
+        $(".display").html($output);
       });
     }
     //calls delete /schools/:sname/teachers/:tname/comments/:cid
@@ -115,7 +115,7 @@ $(document).ready(function() {
         success: function(req) {
           var $output = $("<p>");
           $output.text("Comment : " + $cid + " has been deleted");
-          $(".output").html($output);
+          $(".display").html($output);
         }
       });
     }
