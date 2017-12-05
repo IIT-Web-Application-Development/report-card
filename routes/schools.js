@@ -1,7 +1,22 @@
 var express = require('express');
+let bodyParser = require('body-parser')
 var router = express.Router();
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With,  X-HTTP-Method-Override, Content-Type, Accept");
+  res.header("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
+  next();
+});
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.text());
+app.use(bodyParser.json({ type: 'application/json'}));
 
+//set app to run on port 3000
+app.listen(3000, function () {
+  console.log('Reminder app listening on port 3000')
+});
 //array to hold schools
 var schools = [ ];
 var scount = 0;
