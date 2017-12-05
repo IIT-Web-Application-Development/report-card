@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Report-Card</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,shrink-to-fit=no" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+</head>
+
+<body>
+  <header class="container-fluid">
+	  <h1>Report-Card</h1>
+    <h4>Welcome to Report-Card</h4>
+  </header>
+
+  <main>
+    <ul class="nav nav-tabs" role="tablist">
+      <li class="active clear">|<a href="#editschool" aria-controls="editschool" role="tab" data-toggle="tab" class="clear">School</a>|</li>
+      <li><a href="#editteacher" aria-controls="editteacher" role="tab" data-toggle="tab" class="clear">Teacher</a>|</li>
+    </ul>
+
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="editschool">
+        <h4>Add School</h4>
+        School name:<input type="text" placeholder="Illinois Institute of Technology" class="addschool input"/>
+        <button>Add School</button>
+        <h4>Search School</h4>
+        School name:<input type="text" placeholder="Illinois Institute of Technology" class="searchschool input"/>
+        <button>Search</button>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="editteacher">
+        <h4>Teacher Information:</h4>
+        Search Teacher:<input type="text" placeholder="John Smith" class="searchteacher input"/>
+        <button>Search</button>
+        Add Teacher:<input type="text" placeholder="John Smith" class="addteacher input"/>
+        <button>Add</button>
+
+        <h4>View Teacher Comments:</h4>
+        Teacher Name:<input type="text" placeholder="John Smith" class="viewcomments input"/>
+        <button>View</button>
+
+        <h4>Add Teacher Comment:</h4>
+        Teacher Name:<input type="text" placeholder="John Smith" class="addteachercomment input"/>
+        Comment:<input type="text" placeholder="Teacher is helpful" class="addcomment input"/>
+        Knowledge of teacher:<input type="text" placeholder="took class" class="addknowledge input"/>
+        <button>Add</button>
+
+        <h4>Delete Teacher Comment:</h4>
+        Comment Id:<input type="text" placeholder="2" class="deletecomment input"/>
+        <button>Delete</button>
+      </div>
+    </div>
+    <div class="display"></div>
+  </main>
+
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js "></script>
+  <script src="app.js"></script>
+</body>
+</html>
+
+
+
+
+
+<!--
+extends layout
+
+block content
+  head
+    h1= title
+    p Welcome to #{title}
+
+  body
+    // A navigation tab bar to switch between school and teachers
+    .search-tabs-wrapper
+      ul.nav.nav-tabs(role="tablist")
+        li.active
+          a(href="#school" role="tab" data-toggle="tab") School
+        li
+          a(href="#teacher" role="tab" data-toggle="tab") Teacher
+
+      // tab content for School
+      .tab-content.search-tabs-content
+        .tab-pane.active(id="school")
+          form(method='POST' action='/schools')
+            div.form-group
+              label(for='school') Add School:
+              input#name.form-control(type='text', placeholder='Illinois Institute of Technology' name='school')
+            button.btn.btn-primary(type='add') Add
+
+          form(method='GET' action='/schools')
+            div.form-group
+              label(for='school') Search School:
+              input#name.form-control(type='text', placeholder='Illinois Institute of Technology' name='school')
+            button.btn.btn-primary(type='add') Search
+
+
+        // tab content for Teacher
+        .tab-pane(id="teacher")
+          h3 Teacher Information
+          form(method='GET' action='/schools/:sname/teacher/:tname')
+            div.form-group
+              label(for='school') Search Teacher:
+              input#name.form-control(type='text', placeholder='John Smith' name='teacher')
+            button.btn.btn-primary(type='search') Search
+
+          form(method='POST' action='/schools/:sname/teacher')
+            div.form-group
+              label(for='school') Add Teacher:
+              input#name.form-control(type='text', placeholder='John Smith' name='teacher')
+            button.btn.btn-primary(type='add') Add
+
+          h3 Teacher Comments
+          form(method='GET' action='/schools/:sname/teacher/:tname/comments')
+            div.form-group
+              label(for='school') Teacher Comments:
+              input#name.form-control(type='text', placeholder='John Smith' name='teacher')
+            button.btn.btn-primary(type='Search') Search
+
+
+          form(method='POST' action='/schools/:sname/teacher:tname/comments')
+            div.form-group
+              label(for='school') Add Teacher:
+              input#name.form-control(type='text', placeholder='John Smith' name='teacher')
+              input#name.form-control(type='text', placeholder='Teacher is helpful' name='teacher')
+              input#name.form-control(type='text', placeholder='Took class' name='teacher')
+            button.btn.btn-primary(type='add') Add
+
+          form(method='DELETE' action='/schools/:sname/teacher/:tname/comments/:id')
+            div.form-group
+              label(for='school') Delete Comment:
+              input#name.form-control(type='text', placeholder='2' name='teacher')
+            button.btn.btn-primary(type='Delete') Delete
+-->
